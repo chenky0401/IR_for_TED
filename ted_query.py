@@ -14,7 +14,7 @@ https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html
 
 import re
 from flask import *
-from index import Movie
+from index import Talk
 from pprint import pprint
 from elasticsearch_dsl import Q
 from elasticsearch_dsl.utils import AttrList

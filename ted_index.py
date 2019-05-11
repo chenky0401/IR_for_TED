@@ -31,11 +31,11 @@ class Talk(Document):
 
 
             
-            "tags": _list2str(talks[str(talk_id)]['tags']),
-            "num_views": talks[str(talk_id)]['num_views'],
+    # "tags": _list2str(talks[str(talk_id)]['tags']),
+    # "num_views": talks[str(talk_id)]['num_views'],
 
-            "link": talks[str(talk_id)]['link'],
-            "ratings": talks[str(talk_id)]['ratings']
+    # "link": talks[str(talk_id)]['link'],
+    # "ratings": talks[str(talk_id)]['ratings']
 
     title = Text(analyzer=text_analyzer)
     speaker = Text(analyzer=nnp_analyzer)
