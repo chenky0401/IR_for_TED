@@ -288,8 +288,13 @@ def results(page):
         if len(main_q) > 0:
             if stop_t:
                 message.append('Ignoring term(s): '+' '.join(stop_t))
-            if rest_t:
+
+            # if rest_t:
+
+            # TODO: 
+            if rest_t and duration_q == "0" and len(speaker_q)==0:
                 message.append('Unknown search term: '+' '.join(rest_t))
+
         if len(speaker_q) > 0:
             message.append('Cannot find speaker: '+speaker_q)
         # if len(dir_q) > 0:
