@@ -66,11 +66,26 @@ def results(page):
 
         main_q = request.form['query']+" "
         speaker_q = request.form['speaker'].strip()
-        
-        mintime_q = request.form['mintime'].strip()
-        mintime = 0 if len(mintime_q) == 0 else int(mintime_q)
-        maxtime_q = request.form['maxtime'].strip()
-        maxtime = 99999 if len(mintime_q) == 0 else int(maxtime_q)
+        duration_q = request.form['duration'].strip()
+
+        print("71 m:%s sp:%s dur:%s" % (main_q, speaker_q, duration_q))
+
+        # if duration_q == "0":
+        #     mintime, maxtime = 0, 99999
+        # elif duration_q == "1":
+        #     mintime, maxtime = 0, 5
+        # elif duration_q == "2":
+        #     mintime, maxtime = 5, 10
+        # elif duration_q == "3":
+        #     mintime, maxtime = 10, 20
+        # else:
+        #     mintime, maxtime = 20, 99999
+
+
+        # mintime_q = request.form['mintime'].strip()
+        # mintime = 0 if len(mintime_q) == 0 else int(mintime_q)
+        # maxtime_q = request.form['maxtime'].strip()
+        # maxtime = 99999 if len(mintime_q) == 0 else int(maxtime_q)
 
 
         # if len(mintime_q) is 0:
@@ -86,17 +101,30 @@ def results(page):
         # update global variable template data
         tmp_main = main_q
         tmp_speaker = speaker_q
-        tmp_min = mintime
-        tmp_max = maxtime
+        tmp_duration = duration_q
+
+        # tmp_min = mintime
+        # tmp_max = maxtime
     else:
         # use the current values stored in global variables.
         main_q = tmp_main
         speaker_q = tmp_speaker
+        duration_q = tmp_duration
 
-        mintime = tmp_min
-        mintime_q = tmp_min if tmp_min > 0 else ""
-        maxtime = tmp_max
-        maxtime_q = tmp_max if tmp_max < 99999 else ""
+    if duration_q == "0":
+        mintime, maxtime = 0, 99999
+    elif duration_q == "1":
+        mintime, maxtime = 0, 5
+    elif duration_q == "2":
+        mintime, maxtime = 5, 10
+    elif duration_q == "3":
+        mintime, maxtime = 10, 20
+    else:
+        mintime, maxtime = 20, 99999
+        # mintime = tmp_min
+        # mintime_q = tmp_min if tmp_min > 0 else ""
+        # maxtime = tmp_max
+        # maxtime_q = tmp_max if tmp_max < 99999 else ""
 
 
 
@@ -109,13 +137,14 @@ def results(page):
         #     maxtime_q = tmp_max
         # else:
         #     maxtime_q = ""
-    
+    # print("140 min: %d max: %d" %(mintime, maxtime))
     # store query values to display in search boxes in UI
     shows = {}
     shows['query'] = main_q
     shows['speaker'] = speaker_q
-    shows['maxtime'] = maxtime_q
-    shows['mintime'] = mintime_q
+    shows['duration'] = duration_q
+    # shows['maxtime'] = maxtime_q
+    # shows['mintime'] = mintime_q
     
 
     # Create a search object to query our index 
@@ -127,13 +156,13 @@ def results(page):
     # You will change this section based on how you want to process the query data input into your interface.
         
     # search for runtime using a range query
-    s = search.query('range', runtime={'gte':mintime, 'lte':maxtime})
-    
+    s = search.query('range', duration={'gte':mintime, 'lte':maxtime})
+    # print(160, s.execute())
     
     # search for matching stars
     # You should support multiple values (list)
-
-    s = s.query('match', starring=speaker_q) if len(speaker_q) > 0 else s
+    s = s.query('match', speaker=speaker_q) if len(speaker_q) > 0 else s
+    # print(166, s.execute())
     # s = s.query('match', starring=star_q) if len(star_q) > 0 else s
     # s = s.query('match', language=lang_q) if len(lang_q) > 0 else s
     # s = s.query('match', country=ctry_q) if len(ctry_q) > 0 else s
@@ -161,13 +190,17 @@ def results(page):
 
             for ph_q in phrase_q:
                 s = s.query('multi_match', query=ph_q, type='phrase', fields=['title^2', 'transcript'], operator='and')
+                # print(104, s.execute())
 
             if len(rest_text_q) != 0:
                 # print(rest_text_q)
                 rest_text_q = ' '.join(rest_text_q)
                 s = s.query('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript'], operator='and')
+                # print(200, s.execute())
+
         else:
             s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'transcript'], operator='and')
+            # print(200, s.execute())
 
     # highlight
     s = highlight(s)
@@ -188,14 +221,14 @@ def results(page):
             q = Q('match_all')
             if len(rest_text_q) != 0:
                 # print(rest_text_q)
-                q = Q('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'text'], operator='or')
+                q = Q('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript'], operator='or')
 
             for ph_q in phrase_q:
-                q = q | Q('multi_match', query=ph_q, type='phrase', fields=['title^2', 'text'], operator='or')
+                q = q | Q('multi_match', query=ph_q, type='phrase', fields=['title^2', 'transcript'], operator='or')
                 
             s = s.query(q)
         else:
-            s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'text'], operator='or')
+            s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'transcript'], operator='or')
 
         s = highlight(s)
         response = s[start:end].execute()
@@ -207,8 +240,8 @@ def results(page):
 
     # insert data into response
     resultList = {}
+    # print(response.hits)
     for hit in response.hits:
-
         result={}
         result['score'] = hit.meta.score
         
@@ -220,7 +253,7 @@ def results(page):
         has_highlight = True if 'highlight' in hit.meta else False
         
         result['title'] = hmh.title[0] if has_highlight and 'title' in hmh else hit.title
-        result['transcript'] = hmh.transcript[0] if has_highlight and 'transcript' in hmh else hit.text
+        result['transcript'] = hmh.transcript[0] if has_highlight and 'transcript' in hmh else hit.transcript
         # result['star'] = hmh.star[0] if has_highlight and 'star' in hmh else hit.starring
         # result['language'] = hmh.language[0] if has_highlight and 'language' in hmh else hit.language
         # result['country'] = hmh.country[0] if has_highlight and 'country' in hmh else hit.country
