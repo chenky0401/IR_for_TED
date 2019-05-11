@@ -72,8 +72,8 @@ def buildIndex():
     ted_index.create()
     
     # Open the json film corpus
-    with open('test_corpus.json', 'r', encoding='utf-8') as data_file:
-    # with open('ted_corpus.json', 'r', encoding='utf-8') as data_file:
+    # with open('test_corpus.json', 'r', encoding='utf-8') as data_file:
+    with open('test2.json', 'r', encoding='utf-8') as data_file:
         # load movies from json file into dictionary
         talks = json.load(data_file)
         size = len(talks)
@@ -93,22 +93,24 @@ def buildIndex():
     # Every item to be indexed must have a unique key.
     def actions():
         # mid is movie id (used as key into movies dictionary)
-        for talk_id in range(1, size+1):
+        # for talk_id in range(1, size+1):
+        for talk_id in range(size):
             yield {
             "_index": "ted_index",
             "_type": 'doc',
             "_id": talk_id,
             "title": talks[str(talk_id)]['title'],
             "speaker": talks[str(talk_id)]['speaker'],
-            "transcript": talks[str(talk_id)]['transcript'],
+            "transcript": talks[str(talk_id)]['trancript'],
+            # "transcript": talks[str(talk_id)]['transcript'],
             "date": talks[str(talk_id)]['date'],
             "duration": talks[str(talk_id)]['duration'],
             "tags": _list2str(talks[str(talk_id)]['tags']),
             "num_views": talks[str(talk_id)]['num_views'],
             "num_comments": talks[str(talk_id)]['num_comments'],
 
-            "link": talks[str(talk_id)]['link'],
-            "ratings": talks[str(talk_id)]['ratings']
+            "link": talks[str(talk_id)]['talk_link'],
+            "ratings": talks[str(talk_id)]['categories']
  
             }
 

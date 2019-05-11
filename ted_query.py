@@ -44,7 +44,7 @@ def search():
 @app.route("/results", defaults={'page': 1}, methods=['GET','POST'])
 @app.route("/results/<page>", methods=['GET','POST'])
 def results(page):
-    global tmp_main, tmp_speaker, tmp_min, tmp_max
+    global tmp_main, tmp_speaker, tmp_duration
     global gresults
 
     global phrase_q, rest_text_q
@@ -325,7 +325,7 @@ def documents(res):
             film[term] = s
     # fetch the movie from the elasticsearch index using its id
     talk = Talk.get(id=res, index='ted_index')
-    filmdic = movie.to_dict()
+    filmdic = talk.to_dict()
     film['duration'] = str(filmdic['duration']) + " min"
 
     return render_template('talk_page.html', film=film, title=filmtitle)
