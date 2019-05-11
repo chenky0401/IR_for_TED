@@ -62,14 +62,14 @@ def buildIndex():
     using a generator function.
     """
 
-    film_index = Index('ted_index')
+    ted_index = Index('ted_index')
 
-    # film_index.analyzer(my_analyzer)
+    # ted_index.analyzer(my_analyzer)
 
-    if film_index.exists():
-        film_index.delete()  # Overwrite any previous version
-    film_index.document(Talk)
-    film_index.create()
+    if ted_index.exists():
+        ted_index.delete()  # Overwrite any previous version
+    ted_index.document(Talk)
+    ted_index.create()
     
     # Open the json film corpus
     with open('test_corpus.json', 'r', encoding='utf-8') as data_file:
