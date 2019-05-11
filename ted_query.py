@@ -14,7 +14,7 @@ https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html
 
 import re
 from flask import *
-from index import Talk
+from ted_index import Talk
 from pprint import pprint
 from elasticsearch_dsl import Q
 from elasticsearch_dsl.utils import AttrList
@@ -286,11 +286,11 @@ def documents(res):
                 s += item + ",\n "
             film[term] = s
     # fetch the movie from the elasticsearch index using its id
-    movie = Movie.get(id=res, index='sample_film_index')
+    talk = Talk.get(id=res, index='ted_index')
     filmdic = movie.to_dict()
-    film['runtime'] = str(filmdic['runtime']) + " min"
+    film['duration'] = str(filmdic['duration']) + " min"
 
-    return render_template('page_targetArticle.html', film=film, title=filmtitle)
+    return render_template('talk_page.html', film=film, title=filmtitle)
 
 
 def highlight(s):

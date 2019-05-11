@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Ted Talks</title>
+	<meta charset="UTF-8">
+
+	<link rel="stylesheet" href="css/query.css"/>
+
+</head>
+
+<body>
+	<header class="header-section">
+		<div class="header-warp">
+			<div class="container">
+				<a href="#">
+					<img src=".\img\header.jpg" width="1300" height="150">
+				</a>
+			</div>
+		</div>
+	</header>
+
+	<!-- Search section -->
+	<div class="multi-search-section">
+		<div class="msf-warp set-bg" data-setbg="img/bg.jpg">
+			<div class="container-search">
+				<h2>Search Ted Talks</h2>
+				<form class="multi-search-form" action="/results" name="search" method="post">
+					<dl>
+						<input type="text" placeholder="free search" style="margin-left:80px; width: 1100px;margin-top:40px">
+					</dl>
+					<dd>
+						<input type="text" placeholder="topic" style="margin-left:40px; margin-top:60px">
+					</dd>
+					<dd>
+						<input type="text" placeholder="speaker" style="margin-left:20px; margin-top:60px">
+					</dd>
+					<dd>
+						<!-- <input type="text" placeholder="duration" style="margin-left:20px; margin-top:30px"> -->
+						<select name="duration" id="duration" style="margin-left:20px; margin-top:60px">
+							<option value ="--">duration</option>
+							<option value ="05">0--5mins</option>
+							<option value ="510">5-10mins</option>
+							<option value="1020">10-20mins</option>
+							<option value="20">20mins--</option>
+						</select>
+					</dd>
+					<dd>
+						<button class="site-btn" value="Search" style="margin-left:20px; margin-top:60px">Search</button>
+					</dd>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Search section end -->
+
+
+	<!--====== Javascripts & Jquery ======-->
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/circle-progress.min.js"></script>
+	<script src="js/main.js"></script>
+
+</body>
+</html>

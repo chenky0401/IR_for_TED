@@ -1,0 +1,17 @@
+{
+   "1": {
+      "title": "Banana",
+      "speaker": "speaker",
+      "transcript": "transcript",
+      "date": "date",
+      "duration": 147,
+      "tags": [
+         "tag1",
+         "tag2"
+      ],
+      "num_views": 14733,
+      "num_comments": 14,
+      "link": "link",
+      "ratings": {}
+   }
+}
