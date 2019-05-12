@@ -313,8 +313,8 @@ def results(page):
 # display a particular document given a result number
 @app.route("/documents/<res>", methods=['GET'])
 def documents(res):
-    # global gresults
-    # print(">>>", gresults)
+    global gresults
+    print(">>>", gresults)
     film = gresults[res]
     filmtitle = film['title']
     for term in film:
@@ -327,8 +327,8 @@ def documents(res):
     talk = Talk.get(id=res, index='ted_index')
     filmdic = talk.to_dict()
     film['duration'] = str(filmdic['duration']) + " min"
-
-    return render_template('talk_page.html', film=film, title=filmtitle)
+    # print("gresults", gresults)
+    return render_template('talk_page.html', results=gresults, res=res, film=film, title=filmtitle)
 
 
 def highlight(s):
