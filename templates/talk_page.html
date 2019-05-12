@@ -17,17 +17,16 @@
 				<iframe src="{{film['embed']}}" style="position:absolute;left:0;top:0;height:80%;width:62%" frameborder="0" scrolling="no" allowfullscreen>
 				</iframe>
 				<div style="margin-left: 63%">
-					<img src={{film['wc']}} width="200" height="140">
+					<a href="{{film['wc']}}"></a><img src={{film['wc']}} width="200" height="140">
 				</div>
 				<br/>
 				<div style="margin-left: 63%">
-					<textarea style="width: 450px; padding-bottom:40%; font-size: 16px">
-						{{film['transcript'] | safe}}
+					<textarea readonly="readonly" style="width: 450px; padding-bottom:40%; font-size: 16px; text-indent: 0; ">{{film['transcript'] | safe}}
 					</textarea>
 				</div>
 				<br/>
 				<div style="padding-top: 2%">
-					Source Page: <a href="{{film['link']}}" target="_blank">  {{ film['link']|safe }}
+					Source Page: <a href="{{film['link']}}" target="_blank">  {{ film['link']|safe }}</a>
 				</div>
 			</div>
 		</div>
