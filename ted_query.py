@@ -20,6 +20,8 @@ from elasticsearch_dsl import Q
 from elasticsearch_dsl.utils import AttrList
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search
+from wordcloud import WordCloud
+
 
 app = Flask(__name__)
 
@@ -165,13 +167,6 @@ def results(page):
     # You should support multiple values (list)
     s = s.query('match', speaker=speaker_q) if len(speaker_q) > 0 else s
     # print(166, s.execute())
-    # s = s.query('match', starring=star_q) if len(star_q) > 0 else s
-    # s = s.query('match', language=lang_q) if len(lang_q) > 0 else s
-    # s = s.query('match', country=ctry_q) if len(ctry_q) > 0 else s
-    # s = s.query('match', director=dir_q) if len(dir_q) > 0 else s
-    # s = s.query('match', location=loc_q) if len(loc_q) > 0 else s
-    # s = s.query('match', time=time_q) if len(time_q) > 0 else s
-    # s = s.query('match', categories=cat_q) if len(cat_q) > 0 else s
 
     s_copy = s
     phrase_q, rest_text_q = [], []
@@ -250,6 +245,10 @@ def results(page):
     if result_num > 0 and page == 1:
         max_score = response.hits[0].meta.score
 
+    hit = response.hits[0]
+    
+
+
     for hit in response.hits:
         result = {}
         result['score'] = hit.meta.score
@@ -261,6 +260,17 @@ def results(page):
         result['link'] = hit.link
         result['embed'] = re.sub('www', 'embed', hit.link)
         result['pic'] = hit.pic
+        result['ratings'] = hit.ratings
+
+        # if len(hit.ratings) > 0:
+        #     # print(type(hit.ratings[0]))
+        #     word_list = [ (h.name, h.count) for h in hit.ratings]
+        #     # word_list = [(hit.ratings['name'], hit.ratings['count'])]
+        #     # print(word_list)
+        #     path = word_cloud(word_list, hit.meta.id)
+        # result['wc'] = path
+
+
 
         if max_view < hit.num_views:
             max_view = hit.num_views
@@ -322,16 +332,7 @@ def results(page):
 
         if len(speaker_q) > 0:
             message.append('Cannot find speaker: '+speaker_q)
-        # if len(dir_q) > 0:
-        #     message.append('Cannot find director: '+dir_q)
-        # if len(lang_q) > 0:
-        #     message.append('Cannot find language: '+lang_q)
-        # if len(ctry_q) > 0:
-        #     message.append('Cannot find country: '+ctry_q)
-        # if len(loc_q) > 0:
-        #     message.append('Cannot find location: '+loc_q)
-        # if len(cat_q) > 0:
-        #     message.append('Cannot find category: '+cat_q)
+
 
         return render_template('result.html', results=message, res_num=result_num, page_num=page, queries=shows)
 
@@ -342,18 +343,31 @@ def documents(res):
     # print(">>>", gresults)
     film = gresults[res]
     filmtitle = film['title']
-    for term in film:
-        if type(film[term]) is AttrList:
-            s = "\n"
-            for item in film[term]:
-                s += item + ",\n "
-            film[term] = s
+    # for term in film:
+    #     if type(film[term]) is AttrList:
+    #         s = "\n"
+    #         for item in film[term]:
+    #             s += item + ",\n "
+    #         film[term] = s
     # fetch the movie from the elasticsearch index using its id
+
+
     talk = Talk.get(id=res, index='ted_index')
+
     filmdic = talk.to_dict()
     film['duration'] = str(filmdic['duration']) + " min"
+
+    if len(film["ratings"]) > 0:
+        # print(type(hit.ratings[0]))
+        word_list = [ (h.name, h.count) for h in film["ratings"]]
+        # word_list = [(hit.ratings['name'], hit.ratings['count'])]
+        # print(word_list)
+        path = word_cloud(word_list, res)
+        film['wc'] = path
+
+
     # print("gresults", gresults)
-    return render_template('talk_page.html', results=gresults, res=res, film=film, title=filmtitle)
+    return render_template('talk_page.html', res=res, film=film, title=filmtitle)
 
 
 def highlight(s):
@@ -364,6 +378,20 @@ def highlight(s):
 
     return s
 
+def word_cloud(word_list, n):
+    total = sum(i[1] for i in word_list)
+    freq = {i[0]:(i[1]/total) for i in word_list}
+    # Generate a word cloud image
+    wc = WordCloud(width=150, height=100, background_color="white")
+    # wc = WordCloud(max_font_size=40, min_font_size=8, width=150, height=100, background_color="white")
+    wc.generate_from_frequencies(freq)
+    # Display the generated image
+    # image = wc.to_image()
+    # image.show()
+    # wc.to_file("static/img/"+n+".jpg")
+
+    return "../static/img/"+n+".jpg"
 
 if __name__ == "__main__":
+
     app.run(debug=True)
