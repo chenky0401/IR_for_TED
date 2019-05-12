@@ -81,7 +81,10 @@ def get_video_comments(service, **kwargs):
 
 def get_search_results(service, talk_title, **kwargs):
     results = service.search().list(**kwargs).execute()
-    title_first_result = results['items'][0]['snippet']['title'].split("|")[0].rstrip()
+    title_first_result = results['items'][0]['snippet']['title']
+    if "|" in title_first_result:
+        title_first_result = title_first_result.split("|")[0]
+    title_first_result = title_first_result.rstrip()
     if title_first_result != talk_title:
         # talk not found in YouTube
         return None
