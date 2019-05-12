@@ -1,37 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Ted Talks</title>
+	<title>Talk Page</title>
 	<meta charset="UTF-8">
 
-	<link rel="stylesheet" href="static/css/page.css"/>
+	<!-- <link rel="stylesheet" href="/static/css/page.css"/> -->
 </head>
 
 <body bgcolor="white">
 	<div style="text-align: center">
-		<h2>  {{results[res]['speaker']}}: {{ results[res]['title']|safe}}  </h2>
+		<h2>  {{film['speaker']}}: {{ film['title']|safe}}  </h2>
 	</div>
-	<table style="margin-left: 400px;">
-		<tbody>
-			<tr rowspan="10">
-				<th rowspan="10">
-					{{results[res]['embed_video']}}
-				</th>
-			</tr>
-			<tr>
-				<td>  {{results[res]['speaker']}} </td>
-			</tr>
-			<tr>
-				<td rowspan="2">Views: {{results[res]['num_views']}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Posted Date:  {{results[res]['posted_date']}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relevance:  {{results[res]['relevance']}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Popularity : {{results[res]['popularity']}} <!--  / {{results[res]['base_score']}} --> </td>
-			</tr>
-			<tr>
-				<td>{{results[res]['transcript'] | safe}}</td>
-				<!-- <td>{{results[res]['description'] | safe}}</td> -->
-			</tr>
-			<!-- 
-			<div style="max-width:854px"><div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="https://embed.ted.com/talks/matt_walker_sleep_is_your_superpower" width="854" height="480" style="position:absolute;left:0;top:0;width:100%;height:100%" frameborder="0" scrolling="no" allowfullscreen></iframe></div></div> -->
-		</tbody>
-	</table>
+	<div>
+		<div style="font-size: 18px">
+			<div nowrap style="position:relative;height:0;padding-bottom:41%">
+				<iframe src="{{film['embed']}}" style="position:absolute;left:0;top:0;height:80%;width:62%" frameborder="0" scrolling="no" allowfullscreen>
+				</iframe>
+				<div style="margin-left: 63%">
+					<img src={{film['wc']}} width="200" height="140">
+				</div>
+				<br/>
+				<div style="margin-left: 63%">
+					<textarea style="width: 450px; padding-bottom:40%; font-size: 16px">
+						{{film['transcript'] | safe}}
+					</textarea>
+				</div>
+				<br/>
+				<div style="padding-top: 2%">
+					Source Page: <a href="{{film['link']}}" target="_blank">  {{ film['link']|safe }}
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!--====== Javascripts & Jquery ======-->
 	<script src="static/js/jquery-3.2.1.min.js"></script>
