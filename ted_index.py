@@ -46,6 +46,7 @@ class Talk(Document):
     num_views = Integer()
     num_comments = Integer()
     link = Text()
+    description = Text(analyzer=text_analyzer)
     # ratings = ?
 
 
@@ -77,6 +78,7 @@ def buildIndex():
         # load movies from json file into dictionary
         talks = json.load(data_file)
         size = len(talks)
+        
 
     def _check_int(x):
         """x is either an int or an empty list"""

@@ -74,16 +74,6 @@ def results(page):
 
         # print("71 m:%s sp:%s dur:%s" % (main_q, speaker_q, duration_q))
 
-        # if duration_q == "0":
-        #     mintime, maxtime = 0, 99999
-        # elif duration_q == "1":
-        #     mintime, maxtime = 0, 5
-        # elif duration_q == "2":
-        #     mintime, maxtime = 5, 10
-        # elif duration_q == "3":
-        #     mintime, maxtime = 10, 20
-        # else:
-        #     mintime, maxtime = 20, 99999
 
 
         # mintime_q = request.form['mintime'].strip()
@@ -125,6 +115,8 @@ def results(page):
         mintime, maxtime = 10, 20
     else:
         mintime, maxtime = 20, 99999
+    mintime *= 60
+    maxtime *= 60
         # mintime = tmp_min
         # mintime_q = tmp_min if tmp_min > 0 else ""
         # maxtime = tmp_max
@@ -245,10 +237,6 @@ def results(page):
     if result_num > 0 and page == 1:
         max_score = response.hits[0].meta.score
 
-    hit = response.hits[0]
-    
-
-
     for hit in response.hits:
         result = {}
         result['score'] = hit.meta.score
@@ -261,16 +249,8 @@ def results(page):
         result['embed'] = re.sub('www', 'embed', hit.link)
         result['pic'] = hit.pic
         result['ratings'] = hit.ratings
-
-        # if len(hit.ratings) > 0:
-        #     # print(type(hit.ratings[0]))
-        #     word_list = [ (h.name, h.count) for h in hit.ratings]
-        #     # word_list = [(hit.ratings['name'], hit.ratings['count'])]
-        #     # print(word_list)
-        #     path = word_cloud(word_list, hit.meta.id)
-        # result['wc'] = path
-
-
+        result['transcript'] = hit.transcript
+        result['duration'] = int(hit.duration/60)+1
 
         if max_view < hit.num_views:
             max_view = hit.num_views
@@ -285,7 +265,7 @@ def results(page):
         has_highlight = True if 'highlight' in hit.meta else False
         
         result['title'] = hmh.title[0] if has_highlight and 'title' in hmh else hit.title
-        result['transcript'] = hmh.transcript[0] if has_highlight and 'transcript' in hmh else hit.transcript
+        # result['transcript'] = hmh.transcript[0] if has_highlight and 'transcript' in hmh else hit.transcript
         result['description'] = hmh.description[0] if has_highlight and 'description' in hmh else hit.description
 
         # print(hit.meta.__dict__)
@@ -349,13 +329,12 @@ def documents(res):
     #         for item in film[term]:
     #             s += item + ",\n "
     #         film[term] = s
+
     # fetch the movie from the elasticsearch index using its id
-
-
     talk = Talk.get(id=res, index='ted_index')
 
     filmdic = talk.to_dict()
-    film['duration'] = str(filmdic['duration']) + " min"
+    # film['duration'] = str(filmdic['duration']) + " min"
 
     if len(film["ratings"]) > 0:
         # print(type(hit.ratings[0]))
@@ -364,9 +343,6 @@ def documents(res):
         # print(word_list)
         path = word_cloud(word_list, res)
         film['wc'] = path
-
-
-    # print(film['transcript'])
 
     # print("gresults", gresults)
     return render_template('talk_page.html', res=res, film=film, title=filmtitle)
@@ -382,16 +358,17 @@ def highlight(s):
 
 def word_cloud(word_list, n):
     total = sum(i[1] for i in word_list)
-    freq = {i[0]:(i[1]/total) for i in word_list}
-    # Generate a word cloud image
-    wc = WordCloud(width=1200, height=800, background_color="white")
-    # wc = WordCloud(max_font_size=40, min_font_size=8, width=150, height=100, background_color="white")
-    wc.generate_from_frequencies(freq)
-    # Display the generated image
-    # image = wc.to_image()
-    # image.show()
-    wc.to_file("static/img/"+n+".jpg")
-
+    # print(word_list)
+    # print(total)
+    if total != 0:
+        freq = {i[0]:(i[1]/total) for i in word_list if i[1] != 0}
+        # Generate a word cloud image
+        wc = WordCloud(width=1200, height=800, background_color="white")
+        wc.generate_from_frequencies(freq)
+        # Save the generated image
+        wc.to_file("static/img/"+n+".jpg")
+    else:
+        print("no img")
     return "../static/img/"+n+".jpg"
 
 if __name__ == "__main__":

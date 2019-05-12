@@ -17,27 +17,25 @@
 				<iframe src="{{film['embed']}}" style="position:absolute;left:0;top:0;height:80%;width:62%" frameborder="0" scrolling="no" allowfullscreen>
 				</iframe>
 				<div style="margin-left: 63%">
-					<img src={{film['wc']}} width="200" height="140">
+					<a href="{{ film['wc'] }}"><img src="{{ film['wc'] }}" width="200" height="140"></a>
 				</div>
-				<br/>
 				<div style="margin-left: 63%">
-					<textarea style="width: 450px; padding-bottom:40%; font-size: 16px">
-						{{film['transcript'] | safe}}
+					<textarea readonly="readonly" style="width: 450px; height: 80px;padding-bottom:40%; font-size: 16px">{{film['transcript'] | safe}}
 					</textarea>
 				</div>
 				<br/>
 				<div style="padding-top: 2%">
-					Source Page: <a href="{{film['link']}}" target="_blank">  {{ film['link']|safe }}
+					Source: <a href="{{film['link']}}" target="_blank">  {{ film['link']|safe }}
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!--====== Javascripts & Jquery ======-->
-	<script src="static/js/jquery-3.2.1.min.js"></script>
-	<script src="static/js/bootstrap.min.js"></script>
-	<script src="static/js/owl.carousel.min.js"></script>
-	<script src="static/js/circle-progress.min.js"></script>
-	<script src="static/js/main.js"></script>
+	<script src="../static/js/jquery-3.2.1.min.js"></script>
+	<script src="../static/js/bootstrap.min.js"></script>
+	<script src="../static/js/owl.carousel.min.js"></script>
+	<script src="../static/js/circle-progress.min.js"></script>
+	<script src="../static/js/main.js"></script>
 
 </body>
