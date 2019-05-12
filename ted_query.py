@@ -46,10 +46,12 @@ def search():
 def results(page):
     global tmp_main, tmp_speaker, tmp_duration
     global gresults
+    global max_score
 
     global phrase_q, rest_text_q
     global is_disjunct_search
     global stopwords 
+
 
     # https://www.elastic.co/guide/en/elasticsearch/guide/current/stopwords.html
     stopwords = set(["a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in",
@@ -237,20 +239,33 @@ def results(page):
     # print("phrase: ", phrase_q)
     # print("rest:"+rest_text_q+"<<<<")
     # print("isdis: ", is_disjunct_search)
+    
+    # get the total number of matching results
+    result_num = response.hits.total
 
     # insert data into response
     resultList = {}
     # print(response.hits)
+    max_view, max_comment = 0, 0
+    if result_num > 0 and page == 1:
+        max_score = response.hits[0].meta.score
+
     for hit in response.hits:
         result = {}
         result['score'] = hit.meta.score
+        result['relevance'] = '%.2f'%((hit.meta.score / max_score)*100)
         result['speaker'] = hit.speaker
         result['num_views'] = hit.num_views
+        result['num_comments'] = hit.num_comments
         result['posted_date'] = hit.date
         result['link'] = hit.link
         result['embed'] = re.sub('www', 'embed', hit.link)
         result['pic'] = hit.pic
 
+        if max_view < hit.num_views:
+            max_view = hit.num_views
+        if max_comment < hit.num_comments:
+            max_comment = hit.num_comments
 
         try:
             hmh = hit.meta.highlight
@@ -264,19 +279,22 @@ def results(page):
         result['description'] = hmh.description[0] if has_highlight and 'description' in hmh else hit.description
 
         # print(hit.meta.__dict__)
-        print(hit.meta.highlight.__dict__)
+        # print(hit.meta.highlight.__dict__)
         # print(hit.__dict__)
         # break
 
         resultList[hit.meta.id] = result
 
-
+    for key, result in resultList.items():
+        # print(type(result))
+        pop = 1/2 * (result['num_views']/max_view) + 1/2 * (result['num_comments']/max_comment)
+        pop = 100 * pop
+        result['popularity'] = '%.2f'%pop
     # make the result list available globally
     gresults = resultList
     # print(">>>>", gresults)
     
-    # get the total number of matching results
-    result_num = response.hits.total
+
     
     stop_t = []
     rest_t = []
