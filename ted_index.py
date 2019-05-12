@@ -102,7 +102,6 @@ def buildIndex():
             "title": talks[str(talk_id)]['title'],
             "speaker": talks[str(talk_id)]['speaker'],
             "transcript": talks[str(talk_id)]['trancript'],
-            # "transcript": talks[str(talk_id)]['transcript'],
             "date": talks[str(talk_id)]['date'],
             "duration": talks[str(talk_id)]['duration'],
             "tags": _list2str(talks[str(talk_id)]['tags']),

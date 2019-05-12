@@ -366,6 +366,8 @@ def documents(res):
         film['wc'] = path
 
 
+    # print(film['transcript'])
+
     # print("gresults", gresults)
     return render_template('talk_page.html', res=res, film=film, title=filmtitle)
 
@@ -382,13 +384,13 @@ def word_cloud(word_list, n):
     total = sum(i[1] for i in word_list)
     freq = {i[0]:(i[1]/total) for i in word_list}
     # Generate a word cloud image
-    wc = WordCloud(width=150, height=100, background_color="white")
+    wc = WordCloud(width=1200, height=800, background_color="white")
     # wc = WordCloud(max_font_size=40, min_font_size=8, width=150, height=100, background_color="white")
     wc.generate_from_frequencies(freq)
     # Display the generated image
     # image = wc.to_image()
     # image.show()
-    # wc.to_file("static/img/"+n+".jpg")
+    wc.to_file("static/img/"+n+".jpg")
 
     return "../static/img/"+n+".jpg"
 
