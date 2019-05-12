@@ -105,7 +105,7 @@
 							<td rowspan="1"><a href="/documents/{{res}}" target="_blank">  {{results[res]['speaker']|safe}}: {{ results[res]['title']|safe }}   </a></td>
 						</tr>
 						<tr>
-							<td rowspan="1">Views: {{results[res]['num_views']}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Posted Date:  {{results[res]['posted_date']}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relevance:  {{results[res]['relevance']}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Popularity : {{results[res]['popularity']}} <!--  / {{results[res]['base_score']}} --> </td>
+							<td rowspan="1">Views: {{results[res]['num_views']}} times&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Posted Date:  {{results[res]['posted_date']}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Relevance:  {{results[res]['relevance']}}%  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Popularity : {{results[res]['popularity']}}% <!--  / {{results[res]['base_score']}} --> </td>
 						</tr>
 						<tr>
 							<!-- <td>{{results[res]['transcript'] | safe}}</td> -->
@@ -129,7 +129,7 @@
 	</div>
 
 	<p>
-		<div class="searchbox" style="text-align: center">
+		<div class="searchbox" style="margin-left: 400px">
 			{% if page_num > 1 %}
 				<form action="/results/{{page_num-1}}" name="previouspage" method="get">
 				<input class="site-btn" style="width:80px;float:left;clear:right;margin-left: 20px" type="submit" value="Previous">
