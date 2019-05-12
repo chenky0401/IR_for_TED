@@ -248,6 +248,7 @@ def results(page):
         result['num_views'] = hit.num_views
         result['posted_date'] = hit.date
         result['link'] = hit.link
+        result['embed'] = re.sub('www', 'embed', hit.link)
         result['pic'] = hit.pic
 
 
