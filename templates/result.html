@@ -101,15 +101,15 @@
 				<table style="margin-left: 20px">
 					<tbody>
 						<tr rowspan="5" class="table-row">
-							<th rowspan="5"><a href="#"><img src="https://pi.tedcdn.com/r/talkstar-photos.s3.amazonaws.com/uploads/2fc51546-89a9-4393-b29c-00ae83f72809/126_computermemory.jpg?h=200"></a></th>
-							<td rowspan="1"><a href="/documents/{{res}}" target="_blank">  {{ results[res]['title']|safe }}   </a></td>
-							<td>  {{results[res]['speaker']}}  </td>
+							<th rowspan="5"><a href="/documents/{{res}}"><img src={{results[res]['pic']}} width="425" height="240"></a></th>
+							<td rowspan="1"><a href="/documents/{{res}}" target="_blank">  {{results[res]['speaker']|safe}}: {{ results[res]['title']|safe }}   </a></td>
 						</tr>
 						<tr>
-							<td rowspan="1">{{results[res]['views']}}    {{results[res]['[posted_date']}}    score: {{results[res]['score']}} </td>
+							<td rowspan="1">{{results[res]['num_views']}}    {{results[res]['[posted_date']}}    score: {{results[res]['score']}} </td>
 						</tr>
 						<tr>
-							<td>{{results[res]['text'] | safe}}</td>
+							<!-- <td>{{results[res]['transcript'] | safe}}</td> -->
+							<td>{{results[res]['description'] | safe}}</td>
 						</tr>
 						<tr>
 							<td><a href="{{results[res]['link']}}" target="_blank">  {{ results[res]['link']|safe }}   </a></td>

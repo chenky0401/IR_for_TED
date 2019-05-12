@@ -108,10 +108,10 @@ def buildIndex():
             "tags": _list2str(talks[str(talk_id)]['tags']),
             "num_views": talks[str(talk_id)]['num_views'],
             "num_comments": talks[str(talk_id)]['num_comments'],
-
             "link": talks[str(talk_id)]['talk_link'],
-            "ratings": talks[str(talk_id)]['categories']
- 
+            "ratings": talks[str(talk_id)]['categories'],
+            "description": talks[str(talk_id)]['description'],
+            "pic": talks[str(talk_id)]['thumbnails'] 
             }
 
     helpers.bulk(es, actions()) 

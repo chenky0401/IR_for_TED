@@ -68,7 +68,7 @@ def results(page):
         speaker_q = request.form['speaker'].strip()
         duration_q = request.form['duration'].strip()
 
-        print("71 m:%s sp:%s dur:%s" % (main_q, speaker_q, duration_q))
+        # print("71 m:%s sp:%s dur:%s" % (main_q, speaker_q, duration_q))
 
         # if duration_q == "0":
         #     mintime, maxtime = 0, 99999
@@ -189,17 +189,17 @@ def results(page):
                             rest_text_q.append(q)
 
             for ph_q in phrase_q:
-                s = s.query('multi_match', query=ph_q, type='phrase', fields=['title^2', 'transcript'], operator='and')
+                s = s.query('multi_match', query=ph_q, type='phrase', fields=['title^2', 'transcript', 'description'], operator='and')
                 # print(104, s.execute())
 
             if len(rest_text_q) != 0:
                 # print(rest_text_q)
                 rest_text_q = ' '.join(rest_text_q)
-                s = s.query('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript'], operator='and')
+                s = s.query('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript', 'description'], operator='and')
                 # print(200, s.execute())
 
         else:
-            s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'transcript'], operator='and')
+            s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'transcript', 'description'], operator='and')
             # print(200, s.execute())
 
     # highlight
@@ -221,14 +221,14 @@ def results(page):
             q = Q('match_all')
             if len(rest_text_q) != 0:
                 # print(rest_text_q)
-                q = Q('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript'], operator='or')
+                q = Q('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript', 'description'], operator='or')
 
             for ph_q in phrase_q:
-                q = q | Q('multi_match', query=ph_q, type='phrase', fields=['title^2', 'transcript'], operator='or')
+                q = q | Q('multi_match', query=ph_q, type='phrase', fields=['title^2', 'transcript', 'description'], operator='or')
                 
             s = s.query(q)
         else:
-            s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'transcript'], operator='or')
+            s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'transcript', 'description'], operator='or')
 
         s = highlight(s)
         response = s[start:end].execute()
@@ -242,9 +242,15 @@ def results(page):
     resultList = {}
     # print(response.hits)
     for hit in response.hits:
-        result={}
+        result = {}
         result['score'] = hit.meta.score
-        
+        result['speaker'] = hit.speaker
+        result['num_views'] = hit.num_views
+        result['posted_date'] = hit.date
+        result['link'] = hit.link
+        result['pic'] = hit.pic
+
+
         try:
             hmh = hit.meta.highlight
         except:
@@ -254,13 +260,13 @@ def results(page):
         
         result['title'] = hmh.title[0] if has_highlight and 'title' in hmh else hit.title
         result['transcript'] = hmh.transcript[0] if has_highlight and 'transcript' in hmh else hit.transcript
-        # result['star'] = hmh.star[0] if has_highlight and 'star' in hmh else hit.starring
-        # result['language'] = hmh.language[0] if has_highlight and 'language' in hmh else hit.language
-        # result['country'] = hmh.country[0] if has_highlight and 'country' in hmh else hit.country
-        # result['director'] = hmh.director[0] if has_highlight and 'director' in hmh else hit.director
-        # result['location'] = hmh.location[0] if has_highlight and 'location' in hmh else hit.location
-        # result['time'] = hmh.time[0] if has_highlight and 'time' in hmh else hit.time
-        # result['categories'] = hmh.categories[0] if has_highlight and 'categories' in hmh else hit.categories
+        result['description'] = hmh.description[0] if has_highlight and 'description' in hmh else hit.description
+
+        # print(hit.meta.__dict__)
+        print(hit.meta.highlight.__dict__)
+        # print(hit.__dict__)
+        # break
+
         resultList[hit.meta.id] = result
 
 
@@ -314,7 +320,7 @@ def results(page):
 @app.route("/documents/<res>", methods=['GET'])
 def documents(res):
     global gresults
-    print(">>>", gresults)
+    # print(">>>", gresults)
     film = gresults[res]
     filmtitle = film['title']
     for term in film:
@@ -335,13 +341,7 @@ def highlight(s):
     s = s.highlight_options(pre_tags='<mark>', post_tags='</mark>')
     s = s.highlight('transcript', fragment_size=999999999, number_of_fragments=1)
     s = s.highlight('title', fragment_size=999999999, number_of_fragments=1)
-    # s = s.highlight('starring', fragment_size=999999999, number_of_fragments=1)
-    # s = s.highlight('language', fragment_size=999999999, number_of_fragments=1)
-    # s = s.highlight('country', fragment_size=999999999, number_of_fragments=1)
-    # s = s.highlight('director', fragment_size=999999999, number_of_fragments=1)
-    # s = s.highlight('location', fragment_size=999999999, number_of_fragments=1)
-    # s = s.highlight('time', fragment_size=999999999, number_of_fragments=1)
-    # s = s.highlight('categories', fragment_size=999999999, number_of_fragments=1)
+    s = s.highlight('description', fragment_size=999999999, number_of_fragments=1)
 
     return s
 
