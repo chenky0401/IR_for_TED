@@ -23,11 +23,27 @@
 					<textarea readonly="readonly" style="width: 450px; height: 80px;padding-bottom:40%; font-size: 16px">{{film['transcript'] | safe}}
 					</textarea>
 				</div>
-				<br/>
+				<br/><br/><br/><br/>
+				
+				
+				Recommended for you: 
 				<div style="padding-top: 2%">
-					Source: <a href="{{film['link']}}" target="_blank">  {{ film['link']|safe }}
+					<!-- XXX: {{ recs }} -->
+					{% for rec in recs %}					
+ 						<th rowspan="5"><a href="/documents/{{rec}}"><iframe muted="true" src="{{recs[rec]['embed']}}" 
+ 						width="300" height="200"></a></th></iframe>
+ 					{% endfor %}
+
+					<!-- {% for rec in recs %}					 -->
+ 					<!-- 	<th>{{recs[rec]['title']}}</th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 					{% endfor %} -->
 
 				</div>
+				<div style="padding-top: 2%">
+					Source: <a href="{{film['link']}}" target="_blank">  {{ film['link']|safe }}</a>
+
+				</div>
+
 			</div>
 		</div>
 	</div>

@@ -8,8 +8,8 @@ from elasticsearch_dsl import Index, Document, Text, Keyword, Integer
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl.analysis import tokenizer, analyzer
 from elasticsearch_dsl.query import MultiMatch, Match
-
-
+from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np
 # Connect to local host server
 connections.create_connection(hosts=['127.0.0.1'])
 
@@ -28,15 +28,6 @@ nnp_analyzer = analyzer("nnp_analyzer", tokenizer="whitespace", filter=["lowerca
 # This defines fields and their properties (type and analysis applied).
 # You can use existing es analyzers or use ones you define yourself as above.
 class Talk(Document):
-
-
-            
-    # "tags": _list2str(talks[str(talk_id)]['tags']),
-    # "num_views": talks[str(talk_id)]['num_views'],
-
-    # "link": talks[str(talk_id)]['link'],
-    # "ratings": talks[str(talk_id)]['ratings']
-
     title = Text(analyzer=text_analyzer)
     speaker = Text(analyzer=nnp_analyzer)
     transcript = Text(analyzer=text_analyzer)
@@ -78,7 +69,29 @@ def buildIndex():
         # load movies from json file into dictionary
         talks = json.load(data_file)
         size = len(talks)
-        
+
+        docs = [ v["transcript"]+v["description"]+v["title"]+' '.join(v["tags"]) for k, v in talks.items() ]
+        # d = [ ' '.join(v["tags"]) for k, v in talks.items() ]
+        # d = [ v["title"] for k, v in talks.items() ]
+        vect = TfidfVectorizer(min_df=1)
+        tfidf = vect.fit_transform(docs)
+        # tfidf = vect.fit_transform(d)
+        comp = (tfidf * tfidf.T).A
+        # print(comp)
+        # print(comp.shape)
+
+        for k, v in talks.items():
+            # print(comp[int(k)])
+            arr = comp[int(k)]
+            rec = arr.argsort()[-5:][::-1]
+            # print(np.array2string(rec[1:]))
+            talks[k]["rec"] = np.array2string(rec[1:])[1:-1]
+            # print(">>", talks[k]["rec"])
+            # heap = [  score in comp[int(k)] ]
+            # break
+
+# heap = [(score, doc_id, sorted(list(missing[doc_id]))) for doc_id, score in scores.items()]
+#     return heapq.nlargest(page_num*10, heap), len(scores)
 
     def _check_int(x):
         """x is either an int or an empty list"""
@@ -103,7 +116,7 @@ def buildIndex():
             "_id": talk_id,
             "title": talks[str(talk_id)]['title'],
             "speaker": talks[str(talk_id)]['speaker'],
-            "transcript": talks[str(talk_id)]['trancript'],
+            "transcript": talks[str(talk_id)]['transcript'],
             "date": talks[str(talk_id)]['date'],
             "duration": talks[str(talk_id)]['duration'],
             "tags": _list2str(talks[str(talk_id)]['tags']),
@@ -112,7 +125,8 @@ def buildIndex():
             "link": talks[str(talk_id)]['talk_link'],
             "ratings": talks[str(talk_id)]['categories'],
             "description": talks[str(talk_id)]['description'],
-            "pic": talks[str(talk_id)]['thumbnails'] 
+            "pic": talks[str(talk_id)]['thumbnails'],
+            "rec": talks[str(talk_id)]['rec']
             }
 
     helpers.bulk(es, actions()) 

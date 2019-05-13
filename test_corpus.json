@@ -1,17 +1,711 @@
 {
-   "1": {
-      "title": "Banana",
-      "speaker": "speaker",
-      "transcript": "transcript",
-      "date": "date",
-      "duration": 147,
-      "tags": [
-         "tag1",
-         "tag2"
-      ],
-      "num_views": 14733,
-      "num_comments": 14,
-      "link": "link",
-      "ratings": {}
-   }
+    "0": {
+        "title": "Do schools kill creativity?",
+        "speaker": "Sir Ken Robinson",
+        "description": "Sir Ken Robinson makes an entertaining and profoundly moving case for creating an education system that nurtures (rather than undermines) creativity.",
+        "date": "2006-02-25",
+        "duration": 1164.0,
+        "thumbnails": "https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/6b6eb940bceab359ca676a9b486aae475c1df883_2880x1620.jpg?quality=89&w=600",
+        "tags": [
+            "children",
+            "creativity",
+            "culture",
+            "dance",
+            "education",
+            "parenting",
+            "teaching"
+        ],
+        "num_views": 57420585,
+        "num_comments": 4705,
+        "num_transcripts": 62,
+        "transcript_language": [
+            "Portugu\u00eas brasileiro",
+            null,
+            "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac",
+            "Esperanto",
+            "English",
+            "Ti\u1ebfng Vi\u1ec7t",
+            "Catal\u00e0",
+            "Italiano",
+            "Svenska",
+            "\u010ce\u0161tina",
+            "\u0627\u0644\u0639\u0631\u0628\u064a\u0629",
+            "\u0433\u04c0\u0430\u043b\u0433\u04c0\u0430\u0439 \u043c\u043e\u0442\u0442",
+            "Euskara",
+            "Eesti keel",
+            "Az\u0259rbaycan dili",
+            "Bahasa Indonesia",
+            "Espa\u00f1ol",
+            "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+            "Galego",
+            "Nederlands",
+            "Portugu\u00eas de Portugal",
+            "\u4e2d\u6587 (\u7b80\u4f53)",
+            "\u0e9e\u0eb2\u0eaa\u0eb2\u0ea5\u0eb2\u0ea7",
+            "Norsk bokm\u00e5l",
+            "Afrikaans",
+            "T\u00fcrk\u00e7e",
+            "\u0928\u0947\u092a\u093e\u0932\u0940",
+            "Latvie\u0161u",
+            "Hrvatski",
+            "Lietuvi\u0173 kalba",
+            "\u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
+            "Rom\u00e2n\u0103",
+            "Filipino",
+            "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u043a\u0430\u044f \u043c\u043e\u0432\u0430",
+            "Fran\u00e7ais",
+            "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438",
+            "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
+            "Sloven\u0161\u010dina",
+            "Fran\u00e7ais canadien",
+            "\u09ac\u09be\u0982\u09b2\u09be",
+            "Deutsch",
+            "O'zbek",
+            "Dansk",
+            "\u0641\u0627\u0631\u0633\u0649",
+            "Suomi",
+            "\u0540\u0561\u0575\u0580\u0565\u0576",
+            "Magyar",
+            "\u65e5\u672c\u8a9e",
+            "\u4e2d\u6587 (\u7e41\u9ad4)",
+            "\u05e2\u05d1\u05e8\u05d9\u05ea",
+            "\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8",
+            "\u0421\u0440\u043f\u0441\u043a\u0438, Srpski",
+            "Shqip",
+            "\u041c\u043e\u043d\u0433\u043e\u043b",
+            "\ud55c\uad6d\uc5b4",
+            "\u043c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438",
+            "\u0627\u064f\u0631\u062f\u064f\u0648",
+            "Sloven\u010dina",
+            "Polski",
+            "\u092e\u0930\u093e\u0920\u0940",
+            "\u06a9\u0648\u0631\u062f\u06cc",
+            "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1"
+        ],
+        "categories": [
+            {
+                "id": 7,
+                "name": "Funny",
+                "count": 21043
+            },
+            {
+                "id": 1,
+                "name": "Beautiful",
+                "count": 4987
+            },
+            {
+                "id": 9,
+                "name": "Ingenious",
+                "count": 6569
+            },
+            {
+                "id": 3,
+                "name": "Courageous",
+                "count": 3530
+            },
+            {
+                "id": 11,
+                "name": "Longwinded",
+                "count": 419
+            },
+            {
+                "id": 2,
+                "name": "Confusing",
+                "count": 268
+            },
+            {
+                "id": 8,
+                "name": "Informative",
+                "count": 8152
+            },
+            {
+                "id": 22,
+                "name": "Fascinating",
+                "count": 11327
+            },
+            {
+                "id": 21,
+                "name": "Unconvincing",
+                "count": 314
+            },
+            {
+                "id": 24,
+                "name": "Persuasive",
+                "count": 11284
+            },
+            {
+                "id": 23,
+                "name": "Jaw-dropping",
+                "count": 4635
+            },
+            {
+                "id": 25,
+                "name": "OK",
+                "count": 1241
+            },
+            {
+                "id": 26,
+                "name": "Obnoxious",
+                "count": 222
+            },
+            {
+                "id": 10,
+                "name": "Inspiring",
+                "count": 26385
+            }
+        ],
+        "event": "TED2006",
+        "talk_link": "https://www.ted.com/talks/ken_robinson_says_schools_kill_creativity",
+        "transcript": "Good morning. How are you?(Audience) Good.It's been great, hasn't it?(Laughter)There have been three themes\nrunning through the conference,I have an interest in education.(Laughter)If you work in education,\nyou're not asked.(Laughter)And you're never asked back, curiously.\nThat's strange to me.(Laughter)\"My one night out all week.\"(Laughter)But if you ask about their education,\nthey pin you to the wall,And the third part of this\nis that we've all agreed, nonetheless,So I want to talk about education,(Applause)Thank you.(Applause)That was it, by the way.\nThank you very much.(Laughter)So, 15 minutes left.(Laughter)\"Well, I was born ... \"(Laughter)I heard a great story recently --\nI love telling it --(Laughter)When my son was four in England --(Laughter)If we're being strict about it,\nwherever he went, he was four that year.(Laughter)No, it was big, it was a big story.(Laughter)\"Nativity II.\"(Laughter)What these things have in common\nis that kids will take a chance.Picasso once said this, he said\nthat all children are born artists.I lived in Stratford-on-Avon\nuntil about five years ago.(Laughter)Actually, we lived in a place\ncalled Snitterfield,(Laughter)How annoying would that be?(Laughter)\"Must try harder.\"(Laughter)Being sent to bed by his dad,\nto Shakespeare, \"Go to bed, now!\"(Laughter)\"And stop speaking like that.\"(Laughter)\"It's confusing everybody.\"(Laughter)Anyway, we moved\nfrom Stratford to Los Angeles,(Laughter)Mind you, they'd had\ntheir fourth anniversary,(Laughter)because she was the main reason\nwe were leaving the country.(Laughter)But something strikes you\nwhen you move to America(Laughter)Truthfully, what happens is,\nas children grow up,If you were to visit education as an alien(Laughter)And I like university professors,(Laughter)Don't they?(Laughter)If you want real evidence\nof out-of-body experiences, by the way,(Laughter)And there, you will see it.(Laughter)Waiting until it ends, so they can\ngo home and write a paper about it.(Laughter)Our education system is predicated\non the idea of academic ability.Number one, that the most useful\nsubjects for work are at the top.And the second is academic ability,In the next 30 years, according to UNESCO,Suddenly, degrees aren't worth anything.(Laughter)But now kids with degrees\nare often heading homeWe know three things about intelligence.By the way, there's a shaft of nerves\nthat joins the two halves of the brain,(Laughter)No, she's good at some things.(Laughter)she's doing open-heart surgery over here.(Laughter)\"Give me a break.\"(Laughter)Actually, do you know\nthat old philosophical thing,(Laughter)And the third thing about intelligence is,(Laughter)Gillian and I had lunch one day.\nI said, \"How did you get to be a dancer?\"(Laughter)People weren't aware they could have that.(Laughter)Anyway, she went to see this specialist.But as they went out of the room,I said, \"What happened?\"(Applause)What I think it comes to is this:There was a wonderful quote\nby Jonas Salk, who said,What TED celebrates is the gift\nof the human imagination.Thank you very much.(Applause)"
+    },
+    "1": {
+        "title": "Greening the ghetto",
+        "speaker": "Majora Carter",
+        "description": "In an emotionally charged talk, MacArthur-winning activist Majora Carter details her fight for environmental justice in the South Bronx -- and shows how minority neighborhoods suffer most from flawed urban policy.",
+        "date": "2006-02-26",
+        "duration": 1116.0,
+        "thumbnails": "https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/f90e23c30815d750cc301b37e2159b9f22c613e5_1600x1200.jpg?quality=89&w=600",
+        "tags": [
+            "MacArthur grant",
+            "activism",
+            "business",
+            "cities",
+            "environment",
+            "green",
+            "inequality",
+            "politics",
+            "pollution"
+        ],
+        "num_views": 2310076,
+        "num_comments": 215,
+        "num_transcripts": 35,
+        "transcript_language": [
+            "English",
+            "Ti\u1ebfng Vi\u1ec7t",
+            "Catal\u00e0",
+            "Italiano",
+            "\u0627\u0644\u0639\u0631\u0628\u064a\u0629",
+            "Portugu\u00eas brasileiro",
+            "\u010ce\u0161tina",
+            "Espa\u00f1ol",
+            "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+            "Nederlands",
+            "Portugu\u00eas de Portugal",
+            "Kiswahili",
+            "\u4e2d\u6587 (\u7e41\u9ad4)",
+            "T\u00fcrk\u00e7e",
+            "\u4e2d\u6587 (\u7b80\u4f53)",
+            "\u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
+            "Rom\u00e2n\u0103",
+            "Polski",
+            "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd",
+            "Fran\u00e7ais",
+            "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438",
+            "Hrvatski",
+            "\u09ac\u09be\u0982\u09b2\u09be",
+            "Deutsch",
+            "Magyar",
+            "\u0641\u0627\u0631\u0633\u0649",
+            "\u0939\u093f\u0928\u094d\u0926\u0940",
+            "Suomi",
+            "\u65e5\u672c\u8a9e",
+            "\u05e2\u05d1\u05e8\u05d9\u05ea",
+            "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41",
+            "\ud55c\uad6d\uc5b4",
+            "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1",
+            "\u0627\u064f\u0631\u062f\u064f\u0648",
+            "Sloven\u010dina"
+        ],
+        "categories": [
+            {
+                "id": 3,
+                "name": "Courageous",
+                "count": 796
+            },
+            {
+                "id": 1,
+                "name": "Beautiful",
+                "count": 311
+            },
+            {
+                "id": 2,
+                "name": "Confusing",
+                "count": 34
+            },
+            {
+                "id": 7,
+                "name": "Funny",
+                "count": 64
+            },
+            {
+                "id": 9,
+                "name": "Ingenious",
+                "count": 111
+            },
+            {
+                "id": 21,
+                "name": "Unconvincing",
+                "count": 40
+            },
+            {
+                "id": 11,
+                "name": "Longwinded",
+                "count": 53
+            },
+            {
+                "id": 8,
+                "name": "Informative",
+                "count": 408
+            },
+            {
+                "id": 10,
+                "name": "Inspiring",
+                "count": 1109
+            },
+            {
+                "id": 22,
+                "name": "Fascinating",
+                "count": 142
+            },
+            {
+                "id": 24,
+                "name": "Persuasive",
+                "count": 477
+            },
+            {
+                "id": 23,
+                "name": "Jaw-dropping",
+                "count": 233
+            },
+            {
+                "id": 26,
+                "name": "Obnoxious",
+                "count": 36
+            },
+            {
+                "id": 25,
+                "name": "OK",
+                "count": 85
+            }
+        ],
+        "event": "TED2006",
+        "talk_link": "https://www.ted.com/talks/majora_carter_s_tale_of_urban_renewal",
+        "transcript": "If you're here today --The reason why I'm here today,\nin part, is because of a dog --So when I was contacted\nby the Parks DepartmentAnd just like my new dog, it was an idea\nthat got bigger than I'd imagined.And in the fall, I'm going to exchange\nmarriage vows with my beloved.(Audience whistles)Thank you very much.(Applause)That's him pressing my buttons\nback there, which he does all the time.(Laughter)(Applause)But those of us living\nin environmental justice communitiesUnfortunately, race and class\nare extremely reliable indicatorsFortunately, there are many people\nlike me who are striving for solutionsWell, first of all,\nwe're all incredibly good-looking.(Laughter)Graduated high school, college,\npost-graduate degrees,(Laughter)But, besides being a black woman,So how did things get so different for us?Hunts Point was formerly\na walk-to-work community,Now, why is this story important?Once we realized that, we decided\nit was time to do our own planning.As we nurture the natural environment,\nits abundance will give us back even more.We also built New York City's first green\nand cool roof demonstration project[Butterfly](Laughter)So cool!Anyway, the demonstration\nproject is a springboard[Green is the new black ...](Laughter) (Applause)I like that, too.Anyway, I know Chris told us\nnot to do pitches up here,(Laughter)(Applause)OK. Katrina.Prior to Katrina, the South Bronx\nand New Orleans' Ninth WardNow listen, I do not expect individuals,(Laughter)But -- I know it's the bottom line,\nor one's perception of it,At present, that's not happening\nin New York City.Now let's get this straight:\nI am not anti-development.(Laughter)You probably all have,\nand if you haven't, you need to.(Laughter)So I don't have a problem\nwith developers making money.Let's take Bogota.You, however, are blessed\nwith the gift of influence.Listen -- when I spoke to Mr. Gore\nthe other day after breakfast,(Applause)What troubled me was that this\ntop-down approach is still around.(Laughter)But grassroots groups\nare needed at the table(Applause)I have come from so far\nto meet you like this.Ciao, bellos!(Applause)"
+    },
+    "2": {
+        "title": "Simplicity sells",
+        "speaker": "David Pogue",
+        "description": "New York Times columnist David Pogue takes aim at technology\u2019s worst interface-design offenders, and provides encouraging examples of products that get it right. To funny things up, he bursts into song.",
+        "date": "2006-02-24",
+        "duration": 1286.0,
+        "thumbnails": "https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/ec8cb05b010ea5c373e085b4349e30723ae4aff0_1600x1200.jpg?quality=89&w=600",
+        "tags": [
+            "computers",
+            "entertainment",
+            "interface design",
+            "media",
+            "music",
+            "performance",
+            "simplicity",
+            "software",
+            "technology"
+        ],
+        "num_views": 1789606,
+        "num_comments": 124,
+        "num_transcripts": 26,
+        "transcript_language": [
+            "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac",
+            "English",
+            "Ti\u1ebfng Vi\u1ec7t",
+            "Italiano",
+            "\u0627\u0644\u0639\u0631\u0628\u064a\u0629",
+            "Portugu\u00eas brasileiro",
+            "Espa\u00f1ol",
+            "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+            "Nederlands",
+            "Portugu\u00eas de Portugal",
+            "\u4e2d\u6587 (\u7e41\u9ad4)",
+            "Norsk bokm\u00e5l",
+            "T\u00fcrk\u00e7e",
+            "\u4e2d\u6587 (\u7b80\u4f53)",
+            "Rom\u00e2n\u0103",
+            "Polski",
+            "Fran\u00e7ais",
+            "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438",
+            "Hrvatski",
+            "Deutsch",
+            "Magyar",
+            "\u0641\u0627\u0631\u0633\u0649",
+            "\u65e5\u672c\u8a9e",
+            "\u05e2\u05d1\u05e8\u05d9\u05ea",
+            "\u0421\u0440\u043f\u0441\u043a\u0438, Srpski",
+            "\ud55c\uad6d\uc5b4"
+        ],
+        "categories": [
+            {
+                "id": 7,
+                "name": "Funny",
+                "count": 992
+            },
+            {
+                "id": 3,
+                "name": "Courageous",
+                "count": 47
+            },
+            {
+                "id": 9,
+                "name": "Ingenious",
+                "count": 193
+            },
+            {
+                "id": 1,
+                "name": "Beautiful",
+                "count": 62
+            },
+            {
+                "id": 21,
+                "name": "Unconvincing",
+                "count": 104
+            },
+            {
+                "id": 11,
+                "name": "Longwinded",
+                "count": 78
+            },
+            {
+                "id": 8,
+                "name": "Informative",
+                "count": 410
+            },
+            {
+                "id": 10,
+                "name": "Inspiring",
+                "count": 233
+            },
+            {
+                "id": 22,
+                "name": "Fascinating",
+                "count": 172
+            },
+            {
+                "id": 2,
+                "name": "Confusing",
+                "count": 27
+            },
+            {
+                "id": 25,
+                "name": "OK",
+                "count": 148
+            },
+            {
+                "id": 24,
+                "name": "Persuasive",
+                "count": 233
+            },
+            {
+                "id": 23,
+                "name": "Jaw-dropping",
+                "count": 55
+            },
+            {
+                "id": 26,
+                "name": "Obnoxious",
+                "count": 143
+            }
+        ],
+        "event": "TED2006",
+        "talk_link": "https://www.ted.com/talks/david_pogue_says_simplicity_sells",
+        "transcript": "(Music: \"The Sound of Silence,\"\nSimon &amp; Garfunkel)Hello voice mail, my old friend.(Laughter)I've called for tech support again.(Laughter)And you listen to the sounds of silence.(Music)(Applause)Thank you.Good evening and welcome to:(Laughter)When I was offered the Times\ncolumn six years ago,If you ever are feeling lonely,(Laughter)Ok, so why is the problem accelerating?(Laughter)So the irony is, that as these\nthings became easier to use,I once had the distinct privilege\nof sitting in on the Apple call center(Laughter)Which they do.(Laughter)And I have a copy.(Laughter)It's in your gift bag. No, no.So, some of the stories are just\nso classic, and yet so understandable.\"Well, ma'am, what do you mean\nyour mouse is squeaking?\"She says, \"All I can tell you\nis that it squeaks louder,(Laughter)And the technician's like,She goes, \"Well, the message said,\n'Click here to continue.'\"(Laughter)Well, if you like that one --\nhow much time have we got?(Laughter)So, we must admitIn the hardware world, it's because\nwe the consumers wantI mean, Microsoft Word was last\njust a word processor in, you know,(Laughter)But what's the alternative?(Laughter)This is an un-retouched --\nthis is not a joke --(Laughter)And we've arrived at the age\nof interface matrices,Here's Apple's take\non the exact same dialogue box.(Applause)Thank you -- yes, I designed\nthe dialogue box. No, no.[Welcome to the Type a Word Wizard](Laughter)(Applause)\"Welcome to the Type a Word Wizard.\"(Laughter)(Applause)From the drop-down menu, choose\nthe first letter you want to type. Ok.(Laughter)So there is a limit\nthat we don't want to cross.If you are buying something on the web,(Laughter)You have to scroll, like,\nseven screensful to get to it.This one's been touched on before,(Laughter)Here's another pet one of mine:\nyou have a printer.(Laughter)And one of the buttons at the bottom,\nyou'll notice, is not \"Print.\"(Laughter)(Applause)Now, I'm not saying that Apple\nis the only company who has embraced(Laughter)This is Microsoft Word.(Laughter)You go up to the \"File\" menu\nand you choose \"New.\"(Laughter)(Applause)The Bill Gates song!(Piano music)I've been a geek forever(Laughter)I write the code\nthat makes the whole world run.(Applause)But actually, I believe\nthere are really two Microsofts.(Laughter)So, the signs might indicate(Laughter)with Madonna,(Music)It won't be easy.\nYou'll think I'm strange.(Laughter)When I try to explain why I'm back,(Laughter)You try rhyming with garage!(Laughter)Don't cry for me, Cupertino.(Laughter)The truth is, I never left you.(Laughter)Don't cry for me, Cupertino.(Laughter)(Applause)Thank you.So Steve Jobs had always believed\nin simplicity and elegance and beauty.(Laughter)But it turns out I was wrong, right?I've got just a couple examples.Chris Anderson: Oh yeah.\nDP: Hold that and don't let go.(Applause)In my very last example --[Thank you so much\nfor taking the time to write ...](Laughter)(Applause)And conversely, if somebody\nsends me hate mail --(Laughter)[I admire your frankness ...](Laughter)(Applause)So that's my dirty little secret.\nDon't tell anyone.(Laughter)So the point is --\nthis is a really interesting story.This cult of doing things right\nis starting to spread.CA: Bravo. DP: Thank you very much.CA: Hear, hear!(Applause)"
+    },
+    "3": {
+        "title": "Averting the climate crisis",
+        "speaker": "Al Gore",
+        "description": "With the same humor and humanity he exuded in \"An Inconvenient Truth,\" Al Gore spells out 15 ways that individuals can address climate change immediately, from buying a hybrid to inventing a new, hotter brand name for global warming.",
+        "date": "2006-02-25",
+        "duration": 977.0,
+        "thumbnails": "https://pi.tedcdn.com/r/pe.tedcdn.com/images/ted/a2194b4ef5170bd9e9b086c5053e09cdf3545960_2880x1620.jpg?quality=89&w=600",
+        "tags": [
+            "alternative energy",
+            "cars",
+            "climate change",
+            "culture",
+            "environment",
+            "global issues",
+            "science",
+            "sustainability",
+            "technology"
+        ],
+        "num_views": 3354530,
+        "num_comments": 271,
+        "num_transcripts": 43,
+        "transcript_language": [
+            "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac",
+            "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0",
+            "English",
+            "Italiano",
+            "Svenska",
+            "\u010ce\u0161tina",
+            "\u0627\u0644\u0639\u0631\u0628\u064a\u0629",
+            "Portugu\u00eas brasileiro",
+            "Galego",
+            "Bahasa Indonesia",
+            "Espa\u00f1ol",
+            "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+            "Nederlands",
+            "Portugu\u00eas de Portugal",
+            "\u4e2d\u6587 (\u7b80\u4f53)",
+            "Kiswahili",
+            "\u4e2d\u6587 (\u7e41\u9ad4)",
+            "T\u00fcrk\u00e7e",
+            "Tagalog",
+            "Latvie\u0161u",
+            "Hrvatski",
+            "Lietuvi\u0173 kalba",
+            "\u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
+            "Rom\u00e2n\u0103",
+            "Polski",
+            "Fran\u00e7ais",
+            "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438",
+            "Fran\u00e7ais canadien",
+            "Deutsch",
+            "Magyar",
+            "\u0641\u0627\u0631\u0633\u0649",
+            "\u0939\u093f\u0928\u094d\u0926\u0940",
+            "\u65e5\u672c\u8a9e",
+            "\u05e2\u05d1\u05e8\u05d9\u05ea",
+            "\u0421\u0440\u043f\u0441\u043a\u0438, Srpski",
+            "Shqip",
+            "\ud55c\uad6d\uc5b4",
+            "\u043c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438",
+            "\u0627\u064f\u0631\u062f\u064f\u0648",
+            "Sloven\u010dina",
+            "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
+            "Sloven\u0161\u010dina",
+            "Ti\u1ebfng Vi\u1ec7t"
+        ],
+        "categories": [
+            {
+                "id": 7,
+                "name": "Funny",
+                "count": 554
+            },
+            {
+                "id": 3,
+                "name": "Courageous",
+                "count": 146
+            },
+            {
+                "id": 2,
+                "name": "Confusing",
+                "count": 62
+            },
+            {
+                "id": 1,
+                "name": "Beautiful",
+                "count": 71
+            },
+            {
+                "id": 21,
+                "name": "Unconvincing",
+                "count": 262
+            },
+            {
+                "id": 11,
+                "name": "Longwinded",
+                "count": 113
+            },
+            {
+                "id": 8,
+                "name": "Informative",
+                "count": 465
+            },
+            {
+                "id": 10,
+                "name": "Inspiring",
+                "count": 435
+            },
+            {
+                "id": 22,
+                "name": "Fascinating",
+                "count": 136
+            },
+            {
+                "id": 9,
+                "name": "Ingenious",
+                "count": 57
+            },
+            {
+                "id": 24,
+                "name": "Persuasive",
+                "count": 274
+            },
+            {
+                "id": 23,
+                "name": "Jaw-dropping",
+                "count": 118
+            },
+            {
+                "id": 26,
+                "name": "Obnoxious",
+                "count": 132
+            },
+            {
+                "id": 25,
+                "name": "OK",
+                "count": 207
+            }
+        ],
+        "event": "TED2006",
+        "talk_link": "https://www.ted.com/talks/al_gore_on_averting_climate_crisis",
+        "transcript": "Thank you so much, Chris.(Laughter)Put yourselves in my position.(Laughter)I flew on Air Force Two for eight years.(Laughter)Now I have to take off my shoes\nor boots to get on an airplane!(Laughter)(Applause)I'll tell you one quick story(Laughter)It's a true story --\nevery bit of this is true.Soon after Tipper and I left the --\n(Mock sob) White House --(Laughter)we were driving from our home\nin Nashville to a little farm we have(Laughter)I know it sounds like\na little thing to you, but --(Laughter)I looked in the rear-view mirror(Laughter)You've heard of phantom limb pain?(Laughter)This was a rented Ford Taurus.(Laughter)It was dinnertime,(Laughter)She took our order, and then went\nto the couple in the booth next to us,(Laughter)(Applause)There's been kind\nof a series of epiphanies.(Laughter)The very next day,\ncontinuing the totally true story,(Laughter)But what it turned out to be,(Laughter)And the story began,(Laughter)\"'named Shoney's,(Laughter)Before I could get back to U.S. soil,(Laughter)Three days later,(Laughter)We like to celebrate\neach other's successes in life.(Laughter)I was going to talk\nabout information ecology.(Applause)Chris Anderson: It's a deal!(Applause)Al Gore: I want to focus\non what many of you have saidNow, I know that you wanted some more\nbad news about the environment --Cars and trucks -- I talked\nabout that in the slideshow,Reduce emissions in your home.Be a green consumer.There is a carbon calculator.Next, consider making\nyour business carbon-neutral.Become a catalyst of change.(Applause)Where did anybody get the ideaAnd in our modern country, the role\nof logic and reason no longer includes(Laughter)That's really true.I said the other night,\nand I'll repeat now:Thank you very much, I appreciate it.(Applause)"
+    },
+    "4": {
+        "title": "The best stats you've ever seen",
+        "speaker": "Hans Rosling",
+        "description": "You've never seen data presented like this. With the drama and urgency of a sportscaster, statistics guru Hans Rosling debunks myths about the so-called \"developing world.\"",
+        "date": "2006-02-22",
+        "duration": 1190.0,
+        "thumbnails": "https://pi.tedcdn.com/r/talkstar-photos.s3.amazonaws.com/uploads/91206e56-87be-4387-830b-c38f37d02d78/HansRosling_2006-embed.jpg?quality=89&w=600",
+        "tags": [
+            "Africa",
+            "Asia",
+            "Google",
+            "demo",
+            "economics",
+            "global issues",
+            "health",
+            "statistics",
+            "global development",
+            "visualizations",
+            "math"
+        ],
+        "num_views": 13324694,
+        "num_comments": 609,
+        "num_transcripts": 48,
+        "transcript_language": [
+            "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac",
+            "English",
+            "Ti\u1ebfng Vi\u1ec7t",
+            "\u00cdslenska",
+            "Italiano",
+            "Svenska",
+            "\u0627\u0644\u0639\u0631\u0628\u064a\u0629",
+            "Portugu\u00eas brasileiro",
+            "\u010ce\u0161tina",
+            "Az\u0259rbaycan dili",
+            "Bahasa Indonesia",
+            "Espa\u00f1ol",
+            "\u0420\u0443\u0441\u0441\u043a\u0438\u0439",
+            "Nederlands",
+            "Portugu\u00eas de Portugal",
+            "Kiswahili",
+            "\u4e2d\u6587 (\u7e41\u9ad4)",
+            "T\u00fcrk\u00e7e",
+            "Latvie\u0161u",
+            "\u4e2d\u6587 (\u7b80\u4f53)",
+            "\u0e20\u0e32\u0e29\u0e32\u0e44\u0e17\u0e22",
+            "Rom\u00e2n\u0103",
+            "Polski",
+            "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd",
+            "Fran\u00e7ais",
+            "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438",
+            "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430",
+            "Hrvatski",
+            "\u09ac\u09be\u0982\u09b2\u09be",
+            "Deutsch",
+            "Magyar",
+            "\u0641\u0627\u0631\u0633\u0649",
+            "\u0939\u093f\u0928\u094d\u0926\u0940",
+            "Bosanski",
+            "Suomi",
+            "Dansk",
+            "\u65e5\u672c\u8a9e",
+            "\u05e2\u05d1\u05e8\u05d9\u05ea",
+            "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41",
+            "\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02",
+            "\u041c\u043e\u043d\u0433\u043e\u043b",
+            "\ud55c\uad6d\uc5b4",
+            "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1",
+            "\u043c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438",
+            "\u0627\u064f\u0631\u062f\u064f\u0648",
+            "Sloven\u010dina",
+            "\u06a9\u0648\u0631\u062f\u06cc",
+            "\u0421\u0440\u043f\u0441\u043a\u0438, Srpski"
+        ],
+        "categories": [
+            {
+                "id": 9,
+                "name": "Ingenious",
+                "count": 3338
+            },
+            {
+                "id": 7,
+                "name": "Funny",
+                "count": 1454
+            },
+            {
+                "id": 1,
+                "name": "Beautiful",
+                "count": 994
+            },
+            {
+                "id": 3,
+                "name": "Courageous",
+                "count": 327
+            },
+            {
+                "id": 11,
+                "name": "Longwinded",
+                "count": 116
+            },
+            {
+                "id": 2,
+                "name": "Confusing",
+                "count": 74
+            },
+            {
+                "id": 21,
+                "name": "Unconvincing",
+                "count": 68
+            },
+            {
+                "id": 8,
+                "name": "Informative",
+                "count": 5612
+            },
+            {
+                "id": 10,
+                "name": "Inspiring",
+                "count": 2999
+            },
+            {
+                "id": 22,
+                "name": "Fascinating",
+                "count": 4701
+            },
+            {
+                "id": 23,
+                "name": "Jaw-dropping",
+                "count": 3771
+            },
+            {
+                "id": 24,
+                "name": "Persuasive",
+                "count": 2586
+            },
+            {
+                "id": 25,
+                "name": "OK",
+                "count": 251
+            },
+            {
+                "id": 26,
+                "name": "Obnoxious",
+                "count": 62
+            }
+        ],
+        "event": "TED2006",
+        "talk_link": "https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen",
+        "transcript": "About 10 years ago, I took on the task\nto teach global developmentAnd I put them together\nso that in each pair of countries,(Laughter)But one late night,\nwhen I was compiling the report,(Laughter)Because the chimpanzee\nwould score half rightI did also an unethical study(Laughter)This is where I realized that\nthere was really a need to communicate,So we did this software,\nwhich displays it like this.(Laughter)And they said, \"The world\nis still 'we' and 'them.'So this is what I could display here.Let's see. We stopped the world then.In the '80s here, you have Bangladesh\nstill among the African countries.(Applause)(Applause ends)Let me make a comparison directlySo let's move over to another way hereWe heard it in other forms.And what did it look like\nif we go back in time,Of course it's a logarithmic scale here,But let me split sub-Saharan Africa.There's a huge difference [within] Africa.Data is often better than you think.\nMany people say data is bad.And we get the whole pattern\nhere of the world,But I would like to bring you back\nto about here, at 1960.And if we move back again, here,\nand we put trails on them, like this,Now, this is, more or less, if you look\nat the average data of the countries --And even more, policy makers\nand the corporate sectorsAll that information\nwe saw changing in the world(Laughter)And this won't work.(Applause)So what is needed? We have the databases.Some countries accept that\ntheir databases can go out on the world.But this is what we would\nlike to see, isn't it?(Laughter)And that's a quite clever guy, huh?(Laughter)So we can see a lot happening\nin data in the coming years.(Laughter)It's pretty scary.(Laughter)But I think it's very important\nto have all this information.I end now with the world.Thank you very much.(Applause)"
+    }
 }

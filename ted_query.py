@@ -250,6 +250,7 @@ def results(page):
         result['pic'] = hit.pic
         result['ratings'] = hit.ratings
         result['transcript'] = hit.transcript
+        result['rec'] = hit.rec
         result['duration'] = int(hit.duration/60)+1
 
         if max_view < hit.num_views:
@@ -321,8 +322,8 @@ def results(page):
 def documents(res):
     global gresults
     # print(">>>", gresults)
-    film = gresults[res]
-    filmtitle = film['title']
+    # film = gresults[res]
+    # filmtitle = film['title']
     # for term in film:
     #     if type(film[term]) is AttrList:
     #         s = "\n"
@@ -332,20 +333,41 @@ def documents(res):
 
     # fetch the movie from the elasticsearch index using its id
     talk = Talk.get(id=res, index='ted_index')
-
     filmdic = talk.to_dict()
+
+    film = filmdic
+    filmtitle = film['title']
+    film['embed'] = re.sub('www', 'embed', film["link"])
+
     # film['duration'] = str(filmdic['duration']) + " min"
 
     if len(film["ratings"]) > 0:
         # print(type(hit.ratings[0]))
-        word_list = [ (h.name, h.count) for h in film["ratings"]]
+        # word_list = [ (h.name, h.count) for h in film["ratings"]]
+        word_list = [ (h["name"], h["count"]) for h in film["ratings"]]
         # word_list = [(hit.ratings['name'], hit.ratings['count'])]
         # print(word_list)
         path = word_cloud(word_list, res)
         film['wc'] = path
 
+    # print("REC:", film['rec'])
+    recs = {}
+    for r in film['rec'].split():
+        # print(">>", r)
+        rec = {}
+        talk = Talk.get(id=r, index='ted_index')
+        filmdic = talk.to_dict()
+        rec["pic"] = filmdic["pic"]
+        rec["title"] = filmdic["title"]
+        rec["link"] = filmdic["link"]
+        rec["embed"] = re.sub('www', 'embed', rec["link"])
+        recs[r] = rec
+        
+    # print(recs)
+        # print(filmdic)
     # print("gresults", gresults)
-    return render_template('talk_page.html', res=res, film=film, title=filmtitle)
+    # return render_template('talk_page.html', res=res, film=film, title=filmtitle)
+    return render_template('talk_page.html', res=res, film=film, title=filmtitle, recs=recs)
 
 
 def highlight(s):
