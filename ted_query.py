@@ -48,7 +48,7 @@ def search():
 def results(page):
     global tmp_main, tmp_speaker, tmp_duration
     global gresults
-    global max_score
+
 
     global phrase_q, rest_text_q
     global is_disjunct_search
@@ -75,30 +75,11 @@ def results(page):
         # print("71 m:%s sp:%s dur:%s" % (main_q, speaker_q, duration_q))
 
 
-
-        # mintime_q = request.form['mintime'].strip()
-        # mintime = 0 if len(mintime_q) == 0 else int(mintime_q)
-        # maxtime_q = request.form['maxtime'].strip()
-        # maxtime = 99999 if len(mintime_q) == 0 else int(maxtime_q)
-
-
-        # if len(mintime_q) is 0:
-        #     mintime = 0
-        # else:
-        #     mintime = int(mintime_q)
-        # maxtime_q = request.form['maxtime'].strip()
-        # if len(maxtime_q) is 0:
-        #     maxtime = 99999
-        # else: 
-        #     maxtime = int(maxtime_q)
-
         # update global variable template data
         tmp_main = main_q
         tmp_speaker = speaker_q
         tmp_duration = duration_q
 
-        # tmp_min = mintime
-        # tmp_max = maxtime
     else:
         # use the current values stored in global variables.
         main_q = tmp_main
@@ -117,30 +98,14 @@ def results(page):
         mintime, maxtime = 20, 99999
     mintime *= 60
     maxtime *= 60
-        # mintime = tmp_min
-        # mintime_q = tmp_min if tmp_min > 0 else ""
-        # maxtime = tmp_max
-        # maxtime_q = tmp_max if tmp_max < 99999 else ""
 
-
-
-        # if tmp_min > 0:
-        #     mintime_q = tmp_min
-        # else:
-        #     mintime_q = ""
-        # maxtime = tmp_max
-        # if tmp_max < 99999:
-        #     maxtime_q = tmp_max
-        # else:
-        #     maxtime_q = ""
     # print("140 min: %d max: %d" %(mintime, maxtime))
     # store query values to display in search boxes in UI
     shows = {}
     shows['query'] = main_q
     shows['speaker'] = speaker_q
     shows['duration'] = duration_q
-    # shows['maxtime'] = maxtime_q
-    # shows['mintime'] = mintime_q
+
     
 
     # Create a search object to query our index 
@@ -153,12 +118,10 @@ def results(page):
         
     # search for runtime using a range query
     s = search.query('range', duration={'gte':mintime, 'lte':maxtime})
-    # print(160, s.execute())
     
     # search for matching stars
     # You should support multiple values (list)
     s = s.query('match', speaker=speaker_q) if len(speaker_q) > 0 else s
-    # print(166, s.execute())
 
     s_copy = s
     phrase_q, rest_text_q = [], []
@@ -173,23 +136,18 @@ def results(page):
                         phrase_q.append(q)
                     else:
                         q = q.strip()
-                        # print(">>>"+q.strip()+"<<<")
                         if q:
                             rest_text_q.append(q)
 
             for ph_q in phrase_q:
                 s = s.query('multi_match', query=ph_q, type='phrase', fields=['title^2', 'transcript', 'description'], operator='and')
-                # print(104, s.execute())
 
             if len(rest_text_q) != 0:
-                # print(rest_text_q)
                 rest_text_q = ' '.join(rest_text_q)
                 s = s.query('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript', 'description'], operator='and')
-                # print(200, s.execute())
 
         else:
             s = s.query('multi_match', query=main_q, type='cross_fields', fields=['title^2', 'transcript', 'description'], operator='and')
-            # print(200, s.execute())
 
     # highlight
     s = highlight(s)
@@ -200,7 +158,6 @@ def results(page):
     
     # execute search and return results in specified range.
     response = s[start:end].execute()
-    # print(response)
 
     is_disjunct_search = True if response.hits.total == 0 else False
 
@@ -234,13 +191,10 @@ def results(page):
     resultList = {}
     # print(response.hits)
     max_view, max_comment = 0, 0
-    if result_num > 0 and page == 1:
-        max_score = response.hits[0].meta.score
-
     for hit in response.hits:
         result = {}
         result['score'] = hit.meta.score
-        result['relevance'] = '%.2f'%((hit.meta.score / max_score)*100)
+        result['relevance'] = '%.2f'%((hit.meta.score / response.hits.max_score)*100)
         result['speaker'] = hit.speaker
         result['num_views'] = hit.num_views
         result['num_comments'] = hit.num_comments
@@ -332,6 +286,11 @@ def documents(res):
     #         film[term] = s
 
     # fetch the movie from the elasticsearch index using its id
+    try:
+        film = gresults[res]
+    except:
+        pass
+
     talk = Talk.get(id=res, index='ted_index')
     filmdic = talk.to_dict()
 
@@ -340,16 +299,17 @@ def documents(res):
     film['embed'] = re.sub('www', 'embed', film["link"])
 
     # film['duration'] = str(filmdic['duration']) + " min"
-
-    if len(film["ratings"]) > 0:
-        # print(type(hit.ratings[0]))
-        # word_list = [ (h.name, h.count) for h in film["ratings"]]
-        word_list = [ (h["name"], h["count"]) for h in film["ratings"]]
-        # word_list = [(hit.ratings['name'], hit.ratings['count'])]
-        # print(word_list)
-        path = word_cloud(word_list, res)
-        film['wc'] = path
-
+    try:
+        if len(film["ratings"]) > 0:
+            # print(type(hit.ratings[0]))
+            # word_list = [ (h.name, h.count) for h in film["ratings"]]
+            word_list = [ (h["name"], h["count"]) for h in film["ratings"]]
+            # word_list = [(hit.ratings['name'], hit.ratings['count'])]
+            # print(word_list)
+            path = word_cloud(word_list, res)
+            film['wc'] = path
+    except:
+        film['wc'] = ""
     # print("REC:", film['rec'])
     recs = {}
     for r in film['rec'].split():
@@ -362,7 +322,7 @@ def documents(res):
         rec["link"] = filmdic["link"]
         rec["embed"] = re.sub('www', 'embed', rec["link"])
         recs[r] = rec
-        
+
     # print(recs)
         # print(filmdic)
     # print("gresults", gresults)

@@ -31,6 +31,7 @@ class Talk(Document):
     title = Text(analyzer=text_analyzer)
     speaker = Text(analyzer=nnp_analyzer)
     transcript = Text(analyzer=text_analyzer)
+
     date = Text()
     duration = Integer()
     tags = Text(analyzer=nnp_analyzer)
@@ -38,8 +39,6 @@ class Talk(Document):
     num_comments = Integer()
     link = Text()
     description = Text(analyzer=text_analyzer)
-    # ratings = ?
-
 
     # override the Document save method to include subclass field definitions
     def save(self, *args, **kwargs):
@@ -65,9 +64,12 @@ def buildIndex():
     
     # Open the json film corpus
     # with open('test_corpus.json', 'r', encoding='utf-8') as data_file:
-    with open('test2.json', 'r', encoding='utf-8') as data_file:
+    # with open('test2.json', 'r', encoding='utf-8') as data_file:
+    with open('TEDTalksFullCorpus.json', 'r', encoding='utf-8') as data_file:
+
         # load movies from json file into dictionary
         talks = json.load(data_file)
+        # print(talks.__dict__)
         size = len(talks)
 
         docs = [ v["transcript"]+v["description"]+v["title"]+' '.join(v["tags"]) for k, v in talks.items() ]
@@ -82,20 +84,13 @@ def buildIndex():
 
         for k, v in talks.items():
             # print(comp[int(k)])
-            arr = comp[int(k)]
+            arr = comp[int(k)-1]
             rec = arr.argsort()[-5:][::-1]
             # print(np.array2string(rec[1:]))
             talks[k]["rec"] = np.array2string(rec[1:])[1:-1]
             # print(">>", talks[k]["rec"])
             # heap = [  score in comp[int(k)] ]
             # break
-
-# heap = [(score, doc_id, sorted(list(missing[doc_id]))) for doc_id, score in scores.items()]
-#     return heapq.nlargest(page_num*10, heap), len(scores)
-
-    def _check_int(x):
-        """x is either an int or an empty list"""
-        return x if type(x) == int else 0
 
     def _list2str(x):
         """x is either a list or a str"""
@@ -108,8 +103,8 @@ def buildIndex():
     # Every item to be indexed must have a unique key.
     def actions():
         # mid is movie id (used as key into movies dictionary)
-        # for talk_id in range(1, size+1):
-        for talk_id in range(size):
+        for talk_id in range(1, size+1):
+        # for talk_id in range(size):
             yield {
             "_index": "ted_index",
             "_type": 'doc',
@@ -127,6 +122,9 @@ def buildIndex():
             "description": talks[str(talk_id)]['description'],
             "pic": talks[str(talk_id)]['thumbnails'],
             "rec": talks[str(talk_id)]['rec']
+            # "y_like": talks[str(talk_id)]['YouTube_likeCount'],
+            # "y_like": talks[str(talk_id)]['YouTube_dislikeCount']
+
             }
 
     helpers.bulk(es, actions()) 
