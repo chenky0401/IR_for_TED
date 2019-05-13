@@ -63,9 +63,9 @@ def buildIndex():
     ted_index.create()
     
     # Open the json film corpus
-    # with open('test_corpus.json', 'r', encoding='utf-8') as data_file:
     # with open('test2.json', 'r', encoding='utf-8') as data_file:
-    with open('TEDTalksFullCorpus.json', 'r', encoding='utf-8') as data_file:
+    with open('TEDTalksFullCorpusFixed.json', 'r', encoding='utf-8') as data_file:
+    # with open('test_corpus.json', 'r', encoding='utf-8') as data_file:
 
         # load movies from json file into dictionary
         talks = json.load(data_file)
@@ -121,10 +121,8 @@ def buildIndex():
             "ratings": talks[str(talk_id)]['categories'],
             "description": talks[str(talk_id)]['description'],
             "pic": talks[str(talk_id)]['thumbnails'],
-            "rec": talks[str(talk_id)]['rec']
-            # "y_like": talks[str(talk_id)]['YouTube_likeCount'],
-            # "y_like": talks[str(talk_id)]['YouTube_dislikeCount']
-
+            "rec": talks[str(talk_id)]['rec'],
+            "youtube": talks[str(talk_id)]['YouTube']
             }
 
     helpers.bulk(es, actions()) 

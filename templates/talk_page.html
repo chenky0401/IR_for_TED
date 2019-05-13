@@ -26,6 +26,20 @@
 				<tr>
 					<td>{{film['description'] | safe}}</td>
 				</tr>
+				<tr>
+				{%if film['comments']%}
+					<br/><br/><br/>
+					<tr>
+					What people say on Youtube:
+					<br>
+					{% for c in film['comments'] %}
+						{{c}}
+						<br>
+	 				{% endfor %}
+					</tr>
+				
+				{% endif %}
+				</tr>
 
 				<br/><br/><br/>
 				Recommended for you: 

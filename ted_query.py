@@ -111,6 +111,10 @@ def results(page):
     # Create a search object to query our index 
     search = Search(index='ted_index')
 
+    # determine the subset of results to display (based on current <page> value)
+    start = 0 + (page-1)*10
+    end = 10 + (page-1)*10
+
     # Build up your elasticsearch query in piecemeal fashion based on the user's parameters passed in.
     # The search API is "chainable".
     # Each call to search.query method adds criteria to our growing elasticsearch query.
@@ -118,7 +122,7 @@ def results(page):
         
     # search for runtime using a range query
     s = search.query('range', duration={'gte':mintime, 'lte':maxtime})
-    
+    # print("121", s[start:end].execute())
     # search for matching stars
     # You should support multiple values (list)
     s = s.query('match', speaker=speaker_q) if len(speaker_q) > 0 else s
@@ -152,9 +156,7 @@ def results(page):
     # highlight
     s = highlight(s)
 
-    # determine the subset of results to display (based on current <page> value)
-    start = 0 + (page-1)*10
-    end = 10 + (page-1)*10
+    
     
     # execute search and return results in specified range.
     response = s[start:end].execute()
@@ -186,7 +188,6 @@ def results(page):
     
     # get the total number of matching results
     result_num = response.hits.total
-
     # insert data into response
     resultList = {}
     # print(response.hits)
@@ -197,6 +198,7 @@ def results(page):
         result['relevance'] = '%.2f'%((hit.meta.score / response.hits.max_score)*100)
         result['speaker'] = hit.speaker
         result['num_views'] = hit.num_views
+        # print(hit.__dict__)
         result['num_comments'] = hit.num_comments
         result['posted_date'] = hit.date
         result['link'] = hit.link
@@ -206,6 +208,27 @@ def results(page):
         result['transcript'] = hit.transcript
         result['rec'] = hit.rec
         result['duration'] = int(hit.duration/60)+1
+        if hit.youtube != {}:
+            # print("a>>>")
+            result['num_views'] += hit.youtube.num_views
+            result['likes'] = hit.youtube.YouTube_likeCount
+            result['dislikes'] = hit.youtube.YouTube_dislikeCount
+            result['comments'] = []
+            # for c in hit.youtube.comments:
+            for i in range(len(hit.youtube.comments)):
+                # print(i)
+                c = hit.youtube.comments[i]
+                d = list(list(c.__dict__.values())[0].values())[0]
+                result['comments'].append(d["content"]+" -- "+d["comment_author"])
+                if i == 2:
+                    break
+            # result['comments'] = [ list(list(c.__dict__.values())[0].values())[0]['content']+ for c in hit.youtube.comments ]
+            # print(">>", result['comments'])
+        else:
+            # print(">>>")
+            result['likes'] = 0
+            result['dislikes'] = 0
+            result['comments'] = []
 
         if max_view < hit.num_views:
             max_view = hit.num_views
@@ -289,12 +312,13 @@ def documents(res):
     try:
         film = gresults[res]
     except:
-        pass
+        # pass
 
-    talk = Talk.get(id=res, index='ted_index')
-    filmdic = talk.to_dict()
+        talk = Talk.get(id=res, index='ted_index')
+        filmdic = talk.to_dict()
 
-    film = filmdic
+        film = filmdic
+
     filmtitle = film['title']
     film['embed'] = re.sub('www', 'embed', film["link"])
 
@@ -315,7 +339,7 @@ def documents(res):
     for r in film['rec'].split():
         # print(">>", r)
         rec = {}
-        talk = Talk.get(id=r, index='ted_index')
+        talk = Talk.get(id=str(int(r)+1), index='ted_index')
         filmdic = talk.to_dict()
         rec["pic"] = filmdic["pic"]
         rec["title"] = filmdic["title"]
