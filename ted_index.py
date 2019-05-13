@@ -72,7 +72,8 @@ def buildIndex():
         vect = TfidfVectorizer(min_df=1)
         tfidf = vect.fit_transform(docs)
         comp = (tfidf * tfidf.T).A
-
+        print(comp)
+        
         for k, v in talks.items():
             arr = comp[int(k)-1]
             rec = arr.argsort()[-5:][::-1]
