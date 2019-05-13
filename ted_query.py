@@ -1,17 +1,6 @@
 """
-This module implements a (partial, sample) query interface for elasticsearch movie search. 
-You will need to rewrite and expand sections to support the types of queries over the fields in your UI.
-
-Documentation for elasticsearch query DSL:
-https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
-
-For python version of DSL:
-https://elasticsearch-dsl.readthedocs.io/en/latest/
-
-Search DSL:
-https://elasticsearch-dsl.readthedocs.io/en/latest/search_dsl.html
+Author: Kuan-Yu Chen
 """
-
 import re
 from flask import *
 from ted_index import Talk
@@ -26,10 +15,6 @@ from wordcloud import WordCloud
 app = Flask(__name__)
 
 # Initialize global variables for rendering page
-# Free text, speaker, tags(list), duration(list?), 
-
-# ranking(list: relevance, popularity(num_views)), subtitle language(list)
-
 tmp_main = ""
 tmp_speaker = ""
 tmp_min = ""
@@ -72,9 +57,6 @@ def results(page):
         speaker_q = request.form['speaker'].strip()
         duration_q = request.form['duration'].strip()
 
-        # print("71 m:%s sp:%s dur:%s" % (main_q, speaker_q, duration_q))
-
-
         # update global variable template data
         tmp_main = main_q
         tmp_speaker = speaker_q
@@ -99,14 +81,12 @@ def results(page):
     mintime *= 60
     maxtime *= 60
 
-    # print("140 min: %d max: %d" %(mintime, maxtime))
     # store query values to display in search boxes in UI
     shows = {}
     shows['query'] = main_q
     shows['speaker'] = speaker_q
     shows['duration'] = duration_q
 
-    
 
     # Create a search object to query our index 
     search = Search(index='ted_index')
@@ -122,9 +102,8 @@ def results(page):
         
     # search for runtime using a range query
     s = search.query('range', duration={'gte':mintime, 'lte':maxtime})
-    # print("121", s[start:end].execute())
+
     # search for matching stars
-    # You should support multiple values (list)
     s = s.query('match', speaker=speaker_q) if len(speaker_q) > 0 else s
 
     s_copy = s
@@ -156,8 +135,7 @@ def results(page):
     # highlight
     s = highlight(s)
 
-    
-    
+
     # execute search and return results in specified range.
     response = s[start:end].execute()
 
@@ -168,7 +146,6 @@ def results(page):
         if has_phrase:
             q = Q('match_all')
             if len(rest_text_q) != 0:
-                # print(rest_text_q)
                 q = Q('multi_match', query=rest_text_q, type='cross_fields', fields=['title^2', 'transcript', 'description'], operator='or')
 
             for ph_q in phrase_q:
@@ -180,17 +157,11 @@ def results(page):
 
         s = highlight(s)
         response = s[start:end].execute()
-        # print(response)
 
-    # print("phrase: ", phrase_q)
-    # print("rest:"+rest_text_q+"<<<<")
-    # print("isdis: ", is_disjunct_search)
-    
     # get the total number of matching results
     result_num = response.hits.total
     # insert data into response
     resultList = {}
-    # print(response.hits)
     max_view, max_comment = 0, 0
     for hit in response.hits:
         result = {}
@@ -198,7 +169,6 @@ def results(page):
         result['relevance'] = '%.2f'%((hit.meta.score / response.hits.max_score)*100)
         result['speaker'] = hit.speaker
         result['num_views'] = hit.num_views
-        # print(hit.__dict__)
         result['num_comments'] = hit.num_comments
         result['posted_date'] = hit.date
         result['link'] = hit.link
@@ -209,29 +179,25 @@ def results(page):
         result['rec'] = hit.rec
         result['duration'] = int(hit.duration/60)+1
         if hit.youtube != {}:
-            # print("a>>>")
             result['num_views'] += hit.youtube.num_views
             result['likes'] = hit.youtube.YouTube_likeCount
             result['dislikes'] = hit.youtube.YouTube_dislikeCount
             result['comments'] = []
             # for c in hit.youtube.comments:
             for i in range(len(hit.youtube.comments)):
-                # print(i)
                 c = hit.youtube.comments[i]
                 d = list(list(c.__dict__.values())[0].values())[0]
                 result['comments'].append(d["content"]+" -- "+d["comment_author"])
                 if i == 2:
                     break
-            # result['comments'] = [ list(list(c.__dict__.values())[0].values())[0]['content']+ for c in hit.youtube.comments ]
-            # print(">>", result['comments'])
+
         else:
-            # print(">>>")
             result['likes'] = 0
             result['dislikes'] = 0
             result['comments'] = []
+        if max_view < result['num_views']:
+            max_view = result['num_views']
 
-        if max_view < hit.num_views:
-            max_view = hit.num_views
         if max_comment < hit.num_comments:
             max_comment = hit.num_comments
 
@@ -243,27 +209,18 @@ def results(page):
         has_highlight = True if 'highlight' in hit.meta else False
         
         result['title'] = hmh.title[0] if has_highlight and 'title' in hmh else hit.title
-        # result['transcript'] = hmh.transcript[0] if has_highlight and 'transcript' in hmh else hit.transcript
         result['description'] = hmh.description[0] if has_highlight and 'description' in hmh else hit.description
-
-        # print(hit.meta.__dict__)
-        # print(hit.meta.highlight.__dict__)
-        # print(hit.__dict__)
-        # break
 
         resultList[hit.meta.id] = result
 
     for key, result in resultList.items():
-        # print(type(result))
         pop = 1/2 * (result['num_views']/max_view) + 1/2 * (result['num_comments']/max_comment)
         pop = 100 * pop
         result['popularity'] = '%.2f'%pop
+
     # make the result list available globally
     gresults = resultList
-    # print(">>>>", gresults)
-    
-
-    
+        
     stop_t = []
     rest_t = []
     terms = re.sub('"', '', main_q).split()
@@ -282,9 +239,6 @@ def results(page):
             if stop_t:
                 message.append('Ignoring term(s): '+' '.join(stop_t))
 
-            # if rest_t:
-
-            # TODO: 
             if rest_t and duration_q == "0" and len(speaker_q)==0:
                 message.append('Unknown search term: '+' '.join(rest_t))
 
@@ -298,21 +252,12 @@ def results(page):
 @app.route("/documents/<res>", methods=['GET'])
 def documents(res):
     global gresults
-    # print(">>>", gresults)
-    # film = gresults[res]
-    # filmtitle = film['title']
-    # for term in film:
-    #     if type(film[term]) is AttrList:
-    #         s = "\n"
-    #         for item in film[term]:
-    #             s += item + ",\n "
-    #         film[term] = s
 
     # fetch the movie from the elasticsearch index using its id
     try:
         film = gresults[res]
     except:
-        # pass
+        pass
 
         talk = Talk.get(id=res, index='ted_index')
         filmdic = talk.to_dict()
@@ -322,19 +267,13 @@ def documents(res):
     filmtitle = film['title']
     film['embed'] = re.sub('www', 'embed', film["link"])
 
-    # film['duration'] = str(filmdic['duration']) + " min"
     try:
         if len(film["ratings"]) > 0:
-            # print(type(hit.ratings[0]))
-            # word_list = [ (h.name, h.count) for h in film["ratings"]]
             word_list = [ (h["name"], h["count"]) for h in film["ratings"]]
-            # word_list = [(hit.ratings['name'], hit.ratings['count'])]
-            # print(word_list)
             path = word_cloud(word_list, res)
             film['wc'] = path
     except:
         film['wc'] = ""
-    # print("REC:", film['rec'])
     recs = {}
     for r in film['rec'].split():
         # print(">>", r)
@@ -347,10 +286,6 @@ def documents(res):
         rec["embed"] = re.sub('www', 'embed', rec["link"])
         recs[r] = rec
 
-    # print(recs)
-        # print(filmdic)
-    # print("gresults", gresults)
-    # return render_template('talk_page.html', res=res, film=film, title=filmtitle)
     return render_template('talk_page.html', res=res, film=film, title=filmtitle, recs=recs)
 
 
@@ -363,9 +298,10 @@ def highlight(s):
     return s
 
 def word_cloud(word_list, n):
+    """
+    Create word cloud.
+    """
     total = sum(i[1] for i in word_list)
-    # print(word_list)
-    # print(total)
     if total != 0:
         freq = {i[0]:(i[1]/total) for i in word_list if i[1] != 0}
         # Generate a word cloud image
@@ -377,6 +313,6 @@ def word_cloud(word_list, n):
         print("no img")
     return "../static/img/"+n+".jpg"
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     app.run(debug=True)

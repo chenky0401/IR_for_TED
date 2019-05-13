@@ -1,3 +1,6 @@
+"""
+Author: Kuan-Yu Chen
+"""
 import json
 import re
 import time
@@ -10,23 +13,19 @@ from elasticsearch_dsl.analysis import tokenizer, analyzer
 from elasticsearch_dsl.query import MultiMatch, Match
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
+
 # Connect to local host server
 connections.create_connection(hosts=['127.0.0.1'])
 
 # Create elasticsearch object
 es = Elasticsearch()
 
-# Define analyzers appropriate for your data.
-# You can create a custom analyzer by choosing among elasticsearch options
-# or writing your own functions.
-# Elasticsearch also has default analyzers that might be appropriate.
+# Define analyzers.
 text_analyzer = analyzer("text_analyzer", tokenizer="whitespace", filter=["stop", "lowercase", "porter_stem"])
 
 nnp_analyzer = analyzer("nnp_analyzer", tokenizer="whitespace", filter=["lowercase"])
 
-# Define document mapping (schema) by defining a class as a subclass of Document.
-# This defines fields and their properties (type and analysis applied).
-# You can use existing es analyzers or use ones you define yourself as above.
+# Define document mapping (schema).
 class Talk(Document):
     title = Text(analyzer=text_analyzer)
     speaker = Text(analyzer=nnp_analyzer)
@@ -55,42 +54,30 @@ def buildIndex():
 
     ted_index = Index('ted_index')
 
-    # ted_index.analyzer(my_analyzer)
-
     if ted_index.exists():
         ted_index.delete()  # Overwrite any previous version
     ted_index.document(Talk)
     ted_index.create()
     
     # Open the json film corpus
-    # with open('test2.json', 'r', encoding='utf-8') as data_file:
     with open('TEDTalksFullCorpusFixed.json', 'r', encoding='utf-8') as data_file:
     # with open('test_corpus.json', 'r', encoding='utf-8') as data_file:
 
         # load movies from json file into dictionary
         talks = json.load(data_file)
-        # print(talks.__dict__)
         size = len(talks)
 
+        # Calculate tf-idf for recommendations
         docs = [ v["transcript"]+v["description"]+v["title"]+' '.join(v["tags"]) for k, v in talks.items() ]
-        # d = [ ' '.join(v["tags"]) for k, v in talks.items() ]
-        # d = [ v["title"] for k, v in talks.items() ]
         vect = TfidfVectorizer(min_df=1)
         tfidf = vect.fit_transform(docs)
-        # tfidf = vect.fit_transform(d)
         comp = (tfidf * tfidf.T).A
-        # print(comp)
-        # print(comp.shape)
 
         for k, v in talks.items():
-            # print(comp[int(k)])
             arr = comp[int(k)-1]
             rec = arr.argsort()[-5:][::-1]
-            # print(np.array2string(rec[1:]))
             talks[k]["rec"] = np.array2string(rec[1:])[1:-1]
-            # print(">>", talks[k]["rec"])
-            # heap = [  score in comp[int(k)] ]
-            # break
+            
 
     def _list2str(x):
         """x is either a list or a str"""
@@ -104,7 +91,6 @@ def buildIndex():
     def actions():
         # mid is movie id (used as key into movies dictionary)
         for talk_id in range(1, size+1):
-        # for talk_id in range(size):
             yield {
             "_index": "ted_index",
             "_type": 'doc',
